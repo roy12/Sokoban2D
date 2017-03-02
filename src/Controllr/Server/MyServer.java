@@ -30,6 +30,7 @@ public class MyServer extends Observable{
 		
 		
 		ServerSocket server = new ServerSocket(port);
+		server.setSoTimeout(1000000);
 		Socket aClient = server.accept();
 		
 		//the handler continues until it is stopped

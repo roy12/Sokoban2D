@@ -34,6 +34,7 @@ public class ClientHandler extends Observable implements View{
 			public void run() {
 				while(!stop)
 				{
+					System.out.println("test");
 					writer.print("Enter a command :");
 					String line = scan.nextLine();
 					String[] arr = line.split(" ");
@@ -46,7 +47,7 @@ public class ClientHandler extends Observable implements View{
 					}
 					setChanged();
 					notifyObservers(params);
-					if(line.equals("exit"))
+					if(line.equals("Exit"))
 						break;
 				}
 				
