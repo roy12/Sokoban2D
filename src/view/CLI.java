@@ -68,6 +68,13 @@ public class CLI extends Observable implements View {
 		
 	}
 
+
+	@Override
+	public void bindTimer(IntegerProperty timer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
 

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import view.View;
 
@@ -13,10 +15,30 @@ public class MyModel extends Model {
 	private String str=null;
 	
 	private int stepC = 0;
+	public int seconds;
+	private Timer myTimer=new Timer();
+	private int timerC;
 	
 	public MyModel() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	TimerTask task=new TimerTask() {
+		public void run(){
+			seconds++;
+			if(!lvl.isComplete()){
+			timerC=seconds;	
+			//this.setChanged();
+			List<String> params = new LinkedList<String>();
+			//display();
+			params.add("GuiDisplay");
+			//this.notifyObservers(params);
+			}
+		}
+	};
+	
+	
+	
 	
 	public void move(String s)
 	{
@@ -80,7 +102,8 @@ public class MyModel extends Model {
 		}
 		
 		setStepC(0);
-		
+		seconds=0;
+		startTime();
 		
 		this.setChanged();
 		List<String> params = new LinkedList<String>();
@@ -187,6 +210,21 @@ public class MyModel extends Model {
 	public void setStepC(int stepC) {
 		this.stepC = stepC;
 	}
+
+	public int getTimerC() {
+		return timerC;
+	}
+
+	public void setTimerC(int timerC) {
+		this.timerC = timerC;
+	}
+	public void startTime() {
+		
+		myTimer.scheduleAtFixedRate(task, 1000, 1000);
+		
+	}
+		
+	
 }
 
 

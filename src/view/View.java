@@ -8,4 +8,5 @@ public interface View {
 	void displayError(String msg);
 	void start();
 	public void bindSteps(IntegerProperty steps);
+	public void bindTimer(IntegerProperty timer);
 }

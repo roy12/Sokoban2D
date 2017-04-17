@@ -32,6 +32,7 @@ public class MyController implements Observer {
 	MyServer server;
 	
 	IntegerProperty steps;
+	IntegerProperty timer;
 		
 	
 	public MyController(MyModel model, View view) {
@@ -39,7 +40,9 @@ public class MyController implements Observer {
 		this.view = view;
 		
 		steps = new SimpleIntegerProperty();
+		timer = new SimpleIntegerProperty();
 		view.bindSteps(steps);
+		view.bindTimer(timer);
 		
 		initCommands();
 		controller = new Controller();
@@ -73,7 +76,7 @@ public class MyController implements Observer {
 			@Override
 			public void run() {
 				steps.set(model.getStepC());
-				
+				timer.set(model.getTimerC());
 			}
 		});
 	}

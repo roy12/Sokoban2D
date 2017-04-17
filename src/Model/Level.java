@@ -12,9 +12,6 @@ public class Level {
 	private Pointer2D pl;//player location
 	private int numOfTargets;
 	private ArrayList <Floor> targets;
-	private Timer timer;
-	long tStart;	
-	double elapsedSeconds ;
 	private GameObject[][] backupmap;
 	String lastMove;
 	
@@ -43,8 +40,6 @@ public class Level {
 		this.start=lvl.getStart();
 		this.pl=lvl.getPl();
 		this.numOfTargets=lvl.getNumOfTargets();
-		tStart=System.currentTimeMillis();
-		elapsedSeconds=0;
 		lastMove="Down";
 	}
 	
@@ -57,8 +52,6 @@ public class Level {
 		this.pl=pl;
 		this.numOfTargets=numOfTargets;
 		this.targets=targets;
-		tStart=System.currentTimeMillis();
-		elapsedSeconds=0;
 		lastMove="Down";
 	}
 public Level() {
@@ -133,20 +126,5 @@ public Level() {
 		return flag;
 	}
 	
-	public double getTime()
-	{
-		long tEnd = System.currentTimeMillis();
-		long tDelta = tEnd - tStart;
-		elapsedSeconds=tDelta/1000;
-		return elapsedSeconds;
-	}
-
-	public Timer getTimer() {
-		return timer;
-	}
-
-	public void setTimer(Timer timer) {
-		this.timer = timer;
-	}
 	
 }

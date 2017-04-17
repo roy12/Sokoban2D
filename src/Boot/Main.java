@@ -35,7 +35,6 @@ public class Main extends Application {
 			//music
 			playMusic();
 		
-			
 			primaryStage.setOnCloseRequest(event -> {
 				view.exit();
 			});

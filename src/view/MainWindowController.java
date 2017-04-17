@@ -36,6 +36,9 @@ public class MainWindowController extends Observable implements View, Initializa
 	@FXML
 	Label stepsLabel;
 
+	@FXML
+	Label timerLabel;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -173,6 +176,17 @@ public class MainWindowController extends Observable implements View, Initializa
 			@Override
 			public void run() {
 				stepsLabel.textProperty().bind((stepsC).asString());
+				
+			}
+		});
+	}
+	public void bindTimer(IntegerProperty timerC)
+	{
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				timerLabel.textProperty().bind((timerC).asString());
 				
 			}
 		});

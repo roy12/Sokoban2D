@@ -98,6 +98,11 @@ public class ClientHandler extends Observable implements View{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void bindTimer(IntegerProperty timer) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 	
