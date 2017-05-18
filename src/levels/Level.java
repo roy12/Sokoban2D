@@ -2,6 +2,7 @@ package levels;
 
 import java.io.Serializable;
 
+
 public class Level implements Serializable {
 	private int height;
 	private int width;

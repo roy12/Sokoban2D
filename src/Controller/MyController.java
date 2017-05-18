@@ -76,7 +76,7 @@ public class MyController implements Observer {
 			@Override
 			public void run() {
 				steps.set(model.getStepC());
-				timer.set(model.getTimerC());
+				
 			}
 		});
 	}

@@ -9,8 +9,12 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 
 import Model.Level;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,6 +25,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Duration;
 
 public class MainWindowController extends Observable implements View, Initializable {
 	
@@ -39,11 +44,24 @@ public class MainWindowController extends Observable implements View, Initializa
 	@FXML
 	Label timerLabel;
 	
+	private IntegerProperty seconds;
+	private Timeline timeline;
+	private Boolean firstMove=true;
+
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		seconds = new SimpleIntegerProperty(0); 
+		timerLabel.textProperty().bind(seconds.asString()); 
+
 		gd.displayOpenPage();
 		
+		timeline = new Timeline(); 
+		timeline.setCycleCount(Timeline.INDEFINITE); 
+		timeline.setRate(1.0); 
+		timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1000000),new KeyValue(seconds,1000000))); 
+
 		gd.addEventFilter(MouseEvent.MOUSE_CLICKED, (e)->gd.requestFocus());
 		
 		gd.setOnKeyPressed(new EventHandler<KeyEvent>(){
@@ -51,6 +69,12 @@ public class MainWindowController extends Observable implements View, Initializa
 			public void handle(KeyEvent event) {		
 				
 				List<String> params=new LinkedList<String>();
+				
+				if(firstMove){ 
+				timeline.playFromStart(); 
+				firstMove = false; 
+				}
+
 				
 				if(event.getCode()== KeyCode.UP)
 				{			
@@ -116,7 +140,16 @@ public class MainWindowController extends Observable implements View, Initializa
 		params.add(chosen.getPath());
 		setChanged();
 		notifyObservers(params);
-		}
+		
+		 firstMove=true;
+			 
+			timeline.stop(); 
+			seconds.set(0);
+		
+			 
+			} 
+
+		
 	}
 	
 	public void restartLevel()
@@ -186,7 +219,7 @@ public class MainWindowController extends Observable implements View, Initializa
 			
 			@Override
 			public void run() {
-				timerLabel.textProperty().bind((timerC).asString());
+				
 				
 			}
 		});
