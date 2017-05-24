@@ -154,7 +154,8 @@ public class MainWindowController extends Observable implements View, Initializa
 	
 	public void restartLevel()
 	{
-		
+		firstMove=true;		 
+		seconds.set(0);		
 		List<String> params=new LinkedList<String>();
 		params.add("Restart");
 		setChanged();
@@ -182,6 +183,7 @@ public class MainWindowController extends Observable implements View, Initializa
 			}
 			if(lvl.isComplete())
 				try {
+					timeline.stop();
 					Thread.sleep(400);					
 					gd.finishLevel();	
 				} catch (InterruptedException e) {
