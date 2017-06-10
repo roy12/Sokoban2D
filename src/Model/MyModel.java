@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import levels.Level;
 import view.View;
 
 public class MyModel extends Model {

@@ -3,6 +3,8 @@ package Model;
 import java.beans.XMLDecoder;
 import java.io.InputStream;
 
+import levels.Level;
+
 public class XMLLevelLoader implements LevelLoader {
 	public XMLLevelLoader() {
 	}

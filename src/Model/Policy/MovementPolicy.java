@@ -1,14 +1,15 @@
 package Model.Policy;
 
-import Model.Floor;
-import Model.GameObject;
-import Model.Level;
-import Model.Pointer2D;
+import levels.Floor;
+import levels.GameObject;
+import levels.Level;
+import levels.Pointer2D;
 
 public class MovementPolicy {
+	private boolean possible;
 	
 public MovementPolicy(Level lvl,Pointer2D location,Pointer2D to1,Pointer2D to2) {
-	
+	possible=false;
 	GameObject[][] map=lvl.getMap();
 	GameObject current = map[location.getX()][location.getY()];	//this block (x,y)
 	GameObject next = map[to1.getX()][to1.getY()];	//next block (x+1,x-1,y+1,y-1)
@@ -20,6 +21,7 @@ public MovementPolicy(Level lvl,Pointer2D location,Pointer2D to1,Pointer2D to2) 
 		GameObject last = map[to2.getX()][to2.getY()];	//last block (x+2,x-2,y+2,y-2)
 		if(next.isEmpty())
 		{
+			possible=true;
 			Floor f1 = (Floor)current;
 			Floor f2 = (Floor)next;
 			f1.switchContain(f2);
@@ -29,6 +31,7 @@ public MovementPolicy(Level lvl,Pointer2D location,Pointer2D to1,Pointer2D to2) 
 		}
 		else if(last instanceof Floor & last.isEmpty())
 		{	
+			possible=true;
 			Boolean targetCheck=false;
 			Floor f1 = (Floor)next;
 			Floor f2 = (Floor)last;
@@ -55,8 +58,13 @@ public MovementPolicy(Level lvl,Pointer2D location,Pointer2D to1,Pointer2D to2) 
 		}
 	}
 	else
-	{
+		{
 		lvl.setPl(location);
+		}
 	}
-}
+	
+public boolean isPossible()
+	{
+	return possible;
+	}
 }

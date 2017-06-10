@@ -3,6 +3,8 @@ package Model;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import levels.Level;
+
 public interface LevelSaver {
 	
 	

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
 
-import Model.Level;
 import javafx.beans.property.IntegerProperty;
+import levels.Level;
 
 
 

@@ -1,6 +1,8 @@
 package Model;
 
 import Model.Policy.MovementPolicy;
+import levels.Level;
+import levels.Pointer2D;
 
 public class MoveDown implements Movement {
 	public MoveDown() {

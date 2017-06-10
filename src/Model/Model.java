@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import java.util.Observable;
 
+import levels.Level;
+
 
 
 public class Model extends Observable {

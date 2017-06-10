@@ -1,7 +1,7 @@
 package view;
 
-import Model.Level;
 import javafx.beans.property.IntegerProperty;
+import levels.Level;
 
 public interface View {
 	void displayLevel(Level lvl);

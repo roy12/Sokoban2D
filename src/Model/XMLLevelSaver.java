@@ -5,6 +5,8 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import levels.Level;
+
 public class XMLLevelSaver implements LevelSaver {
 	
 	public XMLLevelSaver() {

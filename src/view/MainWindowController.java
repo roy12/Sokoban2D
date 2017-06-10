@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-import Model.Level;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -26,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
+import levels.Level;
 
 public class MainWindowController extends Observable implements View, Initializable {
 	

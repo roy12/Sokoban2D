@@ -1,4 +1,6 @@
-package Model;
+package levels;
+
+import Model.MoveAbleObject;
 
 public class Space extends MoveAbleObject{
 	

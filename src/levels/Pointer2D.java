@@ -1,4 +1,4 @@
-package Model;
+package levels;
 
 public class Pointer2D {
 	private int x;

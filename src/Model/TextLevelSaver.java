@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import levels.Level;
+
 public class TextLevelSaver implements LevelSaver{
 	
 	public TextLevelSaver(Level lvl,String str) throws IOException {

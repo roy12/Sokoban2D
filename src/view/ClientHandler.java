@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
 
-import Model.GameObject;
-import Model.Level;
 import javafx.beans.property.IntegerProperty;
+import levels.GameObject;
+import levels.Level;
 
 
 public class ClientHandler extends Observable implements View{

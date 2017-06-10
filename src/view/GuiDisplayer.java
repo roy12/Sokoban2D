@@ -2,12 +2,13 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import Model.Level;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import levels.Level;
 
 public class GuiDisplayer extends Canvas{
 	

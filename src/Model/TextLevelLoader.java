@@ -6,6 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import levels.Floor;
+import levels.GameObject;
+import levels.Level;
+import levels.Player;
+import levels.Pointer2D;
+import levels.Space;
+
 public class TextLevelLoader implements LevelLoader{
 	
 	public TextLevelLoader() {}

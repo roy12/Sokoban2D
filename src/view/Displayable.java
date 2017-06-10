@@ -1,6 +1,6 @@
 package view;
 
-import Model.GameObject;
+import levels.GameObject;
 
 public interface Displayable {
 	

@@ -1,5 +1,8 @@
 package Model;
 
+import Model.MoveAbleObject;
+import levels.Pointer2D;
+
 public class Player extends MoveAbleObject{
 	
 	private static final long serialVersionUID = 1L;
