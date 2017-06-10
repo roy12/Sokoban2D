@@ -2,7 +2,12 @@ package search;
 
 import java.util.ArrayList;
 
-public class SokobanSearchable implements Searchable{
+import Model.Policy.MovementPolicy;
+import levels.GameObject;
+import levels.Point2D;
+import levels.Pointer2D;
+
+public abstract class SokobanSearchable implements Searchable{
 	private State initialState;
 	private State goalState;
 	
@@ -18,15 +23,5 @@ public class SokobanSearchable implements Searchable{
 		return goalState;
 	}
 
-	@Override
-	public ArrayList<State> getAllPossibleStates(State s) {
-		/**
-		 * complete 
-		 */
-		ArrayList<State> posStates=new ArrayList<>();
-		
-		
-		//return posStates;
-		
-	}
+	
 }

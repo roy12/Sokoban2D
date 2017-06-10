@@ -28,6 +28,7 @@ public MovementPolicy(Level lvl,Pointer2D location,Pointer2D to1,Pointer2D to2) 
 			
 			// * new * //
 			lvl.setPl(to1);	//saves player original place to real time movement
+			
 		}
 		else if(last instanceof Floor & last.isEmpty())
 		{	
