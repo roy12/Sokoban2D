@@ -10,7 +10,7 @@ import levels.Floor;
 import levels.GameObject;
 import levels.Level;
 import levels.Player;
-import levels.Pointer2D;
+import levels.Position;
 import levels.Space;
 
 public class TextLevelLoader implements LevelLoader{
@@ -28,7 +28,7 @@ public class TextLevelLoader implements LevelLoader{
 		int height=0;
 		int width=0;
 		char[] charArr = null;
-		Pointer2D start=new Pointer2D(0, 0);
+		Position start=new Position(0, 0);
 		ArrayList <Floor> targets=new ArrayList<>();
 		int numOfTargets=0;
 		
@@ -69,7 +69,7 @@ public class TextLevelLoader implements LevelLoader{
 					for(int j=0; j< width ;j++){
 						if(charArr[j] == 'A')
 						{
-							map[i][j] = new Floor(false,false,new Player(new Pointer2D(i, j)));
+							map[i][j] = new Floor(false,false,new Player(new Position(i, j)));
 							start.setPoint(i, j);
 						}
 						else if(charArr[j] == 'o')

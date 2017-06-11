@@ -6,21 +6,21 @@ public class Player extends MoveAbleObject{
 	
 	private static final long serialVersionUID = 1L;
 
-	private Pointer2D location;
+	private Position location;
 	
 	public Player() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Player(Pointer2D location) {
+	public Player(Position location) {
 		this.location=location;
 	}
 	
-	public Pointer2D getLocation() {
+	public Position getLocation() {
 		return location;
 	}
 
-	public void setLocation(Pointer2D location) {
+	public void setLocation(Position location) {
 		this.location = location;
 	}
 }

@@ -1,18 +1,18 @@
 package levels;
 
-public class Pointer2D {
+public class Position {
 	private int x;
 	private int y;
 	
-	public Pointer2D() {
+	public Position() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Pointer2D(int x,int y) {
+	public Position(int x,int y) {
 		this.x=x;
 		this.y=y;	
 	}
-	public Pointer2D(Pointer2D p) {
+	public Position(Position p) {
 		this.x=p.x;
 		this.y=p.y;
 	}

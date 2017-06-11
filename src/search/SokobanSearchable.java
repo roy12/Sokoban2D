@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Model.Policy.MovementPolicy;
 import levels.GameObject;
-import levels.Pointer2D;
+import levels.Position;
 
 public abstract class SokobanSearchable implements Searchable{
 	private State initialState;

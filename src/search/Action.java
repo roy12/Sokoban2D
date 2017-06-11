@@ -4,21 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Action {
+import plan.Clause;
+import plan.Predicate;
+
+public abstract class Action extends Predicate{
+	
+
 	protected String name;
 	protected String[] args;
-	protected List<Predicate> preconditions = new ArrayList<Predicate>();
+	public List<Predicate> preconditions = new ArrayList<Predicate>();
 	protected List<Predicate> addList = new ArrayList<Predicate>();
 	protected List<Predicate> deleteList = new ArrayList<Predicate>();
 	protected Map<String, List<String>> illegalAssignments = new HashMap<>();
+	public Clause effects;
 	
-	public Action() {
+	
+	public Action(String type, String id, String value) {
+		super(type, id, value);
 		
-	}
-	
-	public Action(String name, String... args) {
-		this.name = name;
-		this.args = args;
 	}
 
 	public List<Predicate> getPreconditions() {

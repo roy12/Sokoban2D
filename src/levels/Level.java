@@ -8,8 +8,8 @@ public class Level {
 	private GameObject[][] map;
 	private int width;
 	private int height;
-	private Pointer2D start;
-	private Pointer2D pl;//player location
+	private Position start;
+	private Position pl;//player location
 	private int numOfTargets;
 	private ArrayList <Floor> targets;
 	private GameObject[][] backupmap;
@@ -43,7 +43,7 @@ public class Level {
 		lastMove="Down";
 	}
 	
-	public Level (int width,int height,GameObject[][] map,Pointer2D start,Pointer2D pl, int numOfTargets,ArrayList <Floor> targets) {
+	public Level (int width,int height,GameObject[][] map,Position start,Position pl, int numOfTargets,ArrayList <Floor> targets) {
 		this.width=width;
 		this.height=height;
 		this.map=map;
@@ -82,19 +82,19 @@ public Level() {
 		this.height = height;
 	}
 
-	public Pointer2D getStart() {
+	public Position getStart() {
 		return start;
 	}
 
-	public void setStart(Pointer2D start) {
+	public void setStart(Position start) {
 		this.start = start;
 	}
 
-	public Pointer2D getPl() {
+	public Position getPl() {
 		return pl;
 	}
 
-	public void setPl(Pointer2D pl) {
+	public void setPl(Position pl) {
 		this.pl = pl;
 	}
 

@@ -5,32 +5,62 @@ package sokobanSolver;
 import java.util.ArrayList;
 
 import levels.Level;
-import levels.Pointer2D;
+import levels.Position;
 import search.Searchable;
 import search.State;
 
-public class CommonSearchable implements Searchable<Pointer2D> {
+public class CommonSearchable implements Searchable<Position> {
 
 	private Level lvl;
-	private Pointer2D firstPos;
-	private Pointer2D secondPos;
+	private Position firstPos;
+	private Position secondPos;
+	
+	public CommonSearchable(Level lvl,Position firstPos,Position secondPos) {
+		this.lvl=lvl;
+		this.firstPos=firstPos;
+		this.secondPos=secondPos;
+	}
+	
+	public Level getLvl() {
+		return lvl;
+	}
+
+	public void setLvl(Level lvl) {
+		this.lvl = lvl;
+	}
+
+	public Position getFirstPos() {
+		return firstPos;
+	}
+
+	public void setFirstPos(Position firstPos) {
+		this.firstPos = firstPos;
+	}
+
+	public Position getSecondPos() {
+		return secondPos;
+	}
+
+	public void setSecondPos(Position secondPos) {
+		this.secondPos = secondPos;
+	}
+
 	
 	@Override
-	public State getInitialState() {
-		// TODO Auto-generated method stub
+	public State<Position> getInitialState() {
+		
 		return null;
 	}
 
 	@Override
-	public State getGoalState() {
-		// TODO Auto-generated method stub
+	public State<Position> getGoalState() {
+		
 		return null;
 	}
 
 	@Override
-	public ArrayList<State<Pointer2D>> getAllPossibleStates(State s) {
-		// TODO Auto-generated method stub
+	public ArrayList<State<Position>> getAllPossibleStates(State s) {
+		
 		return null;
 	}
-
 }

@@ -2,7 +2,7 @@ package Model;
 
 import Model.Policy.MovementPolicy;
 import levels.Level;
-import levels.Pointer2D;
+import levels.Position;
 
 public class MoveUp implements Movement {
 	
@@ -12,10 +12,10 @@ public class MoveUp implements Movement {
 	
 	
 public MoveUp(Level lvl) {
-	Pointer2D to1, to2;
-	to1 =new Pointer2D(lvl.getPl());
+	Position to1, to2;
+	to1 =new Position(lvl.getPl());
 	to1.setX(to1.getX()-1);
-	to2 =new Pointer2D(lvl.getPl());
+	to2 =new Position(lvl.getPl());
 	to2.setX(to2.getX()-2);
 	
 	@SuppressWarnings("unused")

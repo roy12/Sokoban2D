@@ -3,12 +3,12 @@ package Model.Policy;
 import levels.Floor;
 import levels.GameObject;
 import levels.Level;
-import levels.Pointer2D;
+import levels.Position;
 
 public class MovementPolicy {
 	private boolean possible;
 	
-public MovementPolicy(Level lvl,Pointer2D location,Pointer2D to1,Pointer2D to2) {
+public MovementPolicy(Level lvl,Position location,Position to1,Position to2) {
 	possible=false;
 	GameObject[][] map=lvl.getMap();
 	GameObject current = map[location.getX()][location.getY()];	//this block (x,y)

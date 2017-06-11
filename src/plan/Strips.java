@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
+import search.Action;
+
 public class Strips  implements Planner{
 
 	private Plannable plannable;
@@ -43,7 +45,7 @@ If top is a satisfied goal, pop it from the stack V
 						stack.pop();
 						Action action=plannable.getsatisfyingAction(top);
 						stack.push(action);
-						stack.push(action.preconditions);
+						stack.push((Predicate) action.preconditions);
 					}
 				}else{
 					stack.pop();

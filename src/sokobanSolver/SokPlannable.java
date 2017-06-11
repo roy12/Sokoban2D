@@ -4,7 +4,7 @@ package sokobanSolver;
 
 import java.util.Set;
 
-import plan.Action;
+import search.Action;
 import plan.Clause;
 import plan.Plannable;
 import plan.Predicate;
