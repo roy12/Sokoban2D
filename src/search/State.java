@@ -2,22 +2,22 @@ package search;
 
 import levels.Level;
 
-public class State extends Level {
-	private State cameFrom;
+public class State<T> {
+	private State<T> cameFrom;
 	private Action action;
 	private Level lvl;
 	
-	public State(State s) {
+	public State(State<T> s) {
 		this.cameFrom=s.cameFrom;
 		this.action=s.action;
 		this.lvl=s.lvl;
 	}
 	
-	public State getCameFrom(){
+	public State<T> getCameFrom(){
 		return cameFrom;
 	}
 	
-	public void setCameFrom(State s){
+	public void setCameFrom(State<T> s){
 		cameFrom = s;
 	}
 	

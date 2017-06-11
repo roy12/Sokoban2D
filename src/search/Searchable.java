@@ -2,8 +2,8 @@ package search;
 
 import java.util.ArrayList;
 
-public interface Searchable {
-	State getInitialState();
-	State getGoalState();
-	ArrayList<State> getAllPossibleStates(State s);
+public interface Searchable<T> {
+	public State<T> getInitialState();
+	public State<T> getGoalState();
+	ArrayList<State<T>> getAllPossibleStates(State<T> s);
 }

@@ -1,6 +1,6 @@
 package search;
 
-public interface Searcher {
-	Solution search(Searchable s);
+public interface Searcher<T> {
+	Solution search(Searchable<T> s);
 	int getNumberOfNodesEvaluated();
 }
