@@ -13,25 +13,25 @@ public class SokPlannable implements Plannable {
 
 	@Override
 	public Clause getGoal() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Clause getKnowledgebase() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Set<Action> getsatisfyingActions(Predicate top) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Action getsatisfyingAction(Predicate top) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

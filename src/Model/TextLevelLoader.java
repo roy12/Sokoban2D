@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import levels.Box;
 import levels.Floor;
 import levels.GameObject;
 import levels.Level;
@@ -29,8 +30,9 @@ public class TextLevelLoader implements LevelLoader{
 		int width=0;
 		char[] charArr = null;
 		Position start=new Position(0, 0);
-		ArrayList <Floor> targets=new ArrayList<>();
+		ArrayList <GameObject> targets=new ArrayList<>();
 		int numOfTargets=0;
+		ArrayList <GameObject> boxes=new ArrayList<>();
 		
 		//read first line to adjust level size
 				
@@ -79,6 +81,11 @@ public class TextLevelLoader implements LevelLoader{
 							numOfTargets++;
 							targets.add(f);
 						}
+						else if(charArr[j]=='@')
+						{	Floor f=new Floor(false,true,new Box(new Position(i, j)));
+							map[i][j] = f ;
+							boxes.add(f);
+						}
 						else
 						{
 							map[i][j] = of.getObj(charArr[j]);
@@ -87,6 +94,6 @@ public class TextLevelLoader implements LevelLoader{
 				}
 			}
 			
-			return new Level(width,height,map,start,start,numOfTargets,targets);
+			return new Level(width,height,map,start,start,numOfTargets,targets,boxes);
 		}
 	}

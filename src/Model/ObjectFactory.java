@@ -16,8 +16,7 @@ public class ObjectFactory {
 			
 			return new Wall();
 		}
-		else if(c=='@')
-			return new Floor(false,true,new Box());		
+				
 		else if( c== ' ')
 			return new Floor(false,false,new Space());
 		else

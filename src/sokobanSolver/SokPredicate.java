@@ -1,11 +1,18 @@
 package sokobanSolver;
 
+import plan.Predicate;
+
 //extends Predicate
 
 public class SokPredicate extends plan.Predicate{
 
 	public SokPredicate(String type, String id, String value) {
 		super(type, id, value);
-		// TODO Auto-generated constructor stub
+		
+	}
+	
+	public boolean isContradict(Predicate p)
+	{
+		return super.isContradict(p) || (!getId().equals(p.getId())&& getValue().equals(p.getValue())||(getValue().equals(p.getValue())&&(!getType().equals(p.getType()))));
 	}
 }

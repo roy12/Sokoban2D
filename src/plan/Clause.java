@@ -46,6 +46,15 @@ public class Clause extends Predicate{
 				return true;
 		return false;
 	}
+	public boolean isContradictClause(Clause c)
+	{
+		for (Predicate p : c.getPredicates()) {
+			if (!isContradict(p))
+				return false;
+		}
+		return true;
+
+	}
 	
 	public boolean satisfies(Clause clause){
 		for(Predicate p : clause.predicates){

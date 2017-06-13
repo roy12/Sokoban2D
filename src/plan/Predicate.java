@@ -18,7 +18,14 @@ public class Predicate {
 	public boolean contradicts(Predicate p) {		
 		return (type.equals(p.type) && id.equals(p.id) && !value.equals(p.value));
 	}
-	
+	public boolean isContradict(Predicate p)
+	{
+		if(p instanceof Clause)
+			return isContradict((Clause) p);
+		else
+			return type.equals(p.type)&&id.equals(p.id)&&!value.equals(p.value);
+		
+	}
 	@Override
 	public int hashCode(){
 		return (type+id+value).hashCode();
@@ -39,6 +46,22 @@ public class Predicate {
 
 	public String getValue() {
 		return value;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 

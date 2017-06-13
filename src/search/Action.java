@@ -17,8 +17,17 @@ public abstract class Action extends Predicate{
 	protected List<Predicate> deleteList = new ArrayList<Predicate>();
 	protected Map<String, List<String>> illegalAssignments = new HashMap<>();
 	public Clause effects;
+	public EnumAction ea;
 	
 	
+	public EnumAction getEa() {
+		return ea;
+	}
+
+	public void setEa(EnumAction ea) {
+		this.ea = ea;
+	}
+
 	public Action(String type, String id, String value) {
 		super(type, id, value);
 		
@@ -53,4 +62,5 @@ public abstract class Action extends Predicate{
 	public String getName() {
 		return name;
 	}
+
 }

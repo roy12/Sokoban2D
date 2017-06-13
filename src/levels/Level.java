@@ -11,9 +11,10 @@ public class Level {
 	private Position start;
 	private Position pl;//player location
 	private int numOfTargets;
-	private ArrayList <Floor> targets;
+	private ArrayList <GameObject> targets;
 	private GameObject[][] backupmap;
 	String lastMove;
+	private ArrayList <GameObject> boxes;
 	
 	
 	
@@ -41,9 +42,11 @@ public class Level {
 		this.pl=lvl.getPl();
 		this.numOfTargets=lvl.getNumOfTargets();
 		lastMove="Down";
+		this.targets=targets;
+		this.boxes=boxes;
 	}
 	
-	public Level (int width,int height,GameObject[][] map,Position start,Position pl, int numOfTargets,ArrayList <Floor> targets) {
+	public Level (int width,int height,GameObject[][] map,Position start,Position pl, int numOfTargets,ArrayList <GameObject> targets,ArrayList <GameObject> boxes) {
 		this.width=width;
 		this.height=height;
 		this.map=map;
@@ -53,6 +56,7 @@ public class Level {
 		this.numOfTargets=numOfTargets;
 		this.targets=targets;
 		lastMove="Down";
+		this.boxes=boxes;
 	}
 public Level() {
 	// TODO Auto-generated constructor stub
@@ -106,15 +110,15 @@ public Level() {
 		this.numOfTargets = numOfTargets;
 	}
 
-	public ArrayList <Floor> getTargets() {
+	public ArrayList <GameObject> getTargets() {
 		return targets;
 	}
 
-	public void setTargets(ArrayList <Floor> targets) {
+	public void setTargets(ArrayList <GameObject> targets) {
 		this.targets = targets;
 	}
 	
-	public Boolean isComplete()
+	public boolean isComplete()
 	{
 		boolean flag=true;
 		for (int i=0; i<targets.size(); i++) {		
@@ -125,6 +129,26 @@ public Level() {
 		}
 		return flag;
 	}
+
+	public ArrayList<GameObject> getBoxes() {
+		return boxes;
+	}
+
+	public void setBoxes(ArrayList<GameObject> boxes) {
+		this.boxes = boxes;
+	}
 	
+	public boolean posiblePosition(Position pos)
+	{
+		if(pos.getX()<0||pos.getX()>width||pos.getY()<0||pos.getY()>height)
+			return false;
+		else
+			return true;
+	}
+	public GameObject getGameObjectByPosition(Position p)
+	{
+		GameObject go=map[p.getX()][p.getY()];		
+		return go;
+	}
 	
 }

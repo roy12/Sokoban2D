@@ -5,9 +5,10 @@ import java.io.Serializable;
 public class GameObject implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	private Position pos;
 	
 	public boolean isEmpty(){return false;};
-	
+		
 	public GameObject() {
 		
 	}	
@@ -18,17 +19,33 @@ public class GameObject implements Serializable {
 
 	}
 	
-	public char getChar(GameObject lo){
-		if (lo instanceof Wall)
+	public char getChar(){
+		if (this instanceof Wall)
 			return '#';
-		else if(lo instanceof Player)
+		//problem need to replace to floor.gettype 
+		else if(this instanceof Player)
 			return 'A';
-		else if (lo instanceof Box)
+		else if (this instanceof Box)
 			return '@';
-		else if (lo instanceof Target)
+		else if (this instanceof Target)
 			return 'o';
 		return ' ';
 	}
+
+	public Position getPos() {
+		return pos;
+	}
+
+	public void setPos(Position pos) {
+		this.pos = pos;
+	}
+
+	public boolean isContainBox() {
+		
+		return false;
+	}
+	
+	
 	
 
 }

@@ -3,19 +3,23 @@ package sokobanSolver;
 //TODO getters & setters & check all posible move (abstract)methods
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import levels.Level;
 import levels.Position;
+import search.Action;
+import search.EnumAction;
 import search.Searchable;
 import search.State;
 
-public class CommonSearchable implements Searchable<Position> {
+public abstract class CommonSearchable implements Searchable<Position> {
 
 	private Level lvl;
 	private Position firstPos;
 	private Position secondPos;
 	
 	public CommonSearchable(Level lvl,Position firstPos,Position secondPos) {
+		super();
 		this.lvl=lvl;
 		this.firstPos=firstPos;
 		this.secondPos=secondPos;
@@ -43,24 +47,18 @@ public class CommonSearchable implements Searchable<Position> {
 
 	public void setSecondPos(Position secondPos) {
 		this.secondPos = secondPos;
-	}
-
+	}	
 	
-	@Override
 	public State<Position> getInitialState() {
-		
-		return null;
+		State<Position> start=new State<>(null,0,firstPos,null);
+		return start;
 	}
-
-	@Override
+	
 	public State<Position> getGoalState() {
-		
-		return null;
+		State<Position> goal=new State<>(null,0,secondPos,null);
+		return goal;
 	}
 
-	@Override
-	public ArrayList<State<Position>> getAllPossibleStates(State s) {
+	public abstract boolean checkPossibleMove(Position currentPosition,EnumAction ea);
 		
-		return null;
-	}
 }
