@@ -21,11 +21,10 @@ public class PlayerSearchable extends CommonSearchable {
 
 	public PlayerSearchable(Level lvl, Position firstPos, Position secondPos) {
 		super(lvl, firstPos, secondPos);
-		// TODO Auto-generated constructor stub
+	
 	}
 
-	public void setCurrentBoxPos(LinkedList<Position> boxPosition) {
-		// TODO Auto-generated method stub
+	public void setCurrentBoxPos(LinkedList<Position> boxPosition) {		
 		
 	}
 
