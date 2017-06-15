@@ -1,50 +1,128 @@
 package search;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
-public abstract class CommonSearcher<T> implements Searcher<T> {
+public abstract class CommonSearcher<T> implements Searcher<T>
+{
+	private State<T> finalState;
 	protected int evaluatedNodes;
 	protected PriorityQueue<State<T>> openList;
+	@Override
+	public abstract Solution search(Searchable<T> searchable);
+
+
 	
-	public CommonSearcher () {
-		openList=new PriorityQueue<State<T>>();
-		evaluatedNodes =0;
+	protected LinkedList<EnumAction> backTrace(State<T> goalState) 
+	{
+
+		LinkedList<EnumAction> list=new LinkedList<>();
+		State<T> current=goalState;
+		while(current!=null)
+		{
+
+			if(current.getAction()!=null)
+			{
+
+				if(current.getAction().getEa()!=null)
+				{
+					list.addFirst(current.getAction().getEa());
+					if(current.getAction().getHistory()!=null)
+					{
+						for(int i=current.getAction().getHistory().size()-1;i>=0;i--)
+						{
+							list.addFirst(current.getAction().getHistory().get(i));
+						}
+					}
+				}
+			}
+			
+
+			current=current.getCameFrom();
+		}
+
+		return list;
+		
 	}
-	
-	public int getNumberOfNodesEvaluated() {		
+	@Override
+	public int getNumberOfNodesEvaluated()
+	{
+		// TODO Auto-generated method stub
 		return evaluatedNodes;
 	}
-	
-	/**
-	 * how to get from state to state
-	 * @param goalState
-	 * @return
-	 */
-	protected Solution backTrace(State<T> goalState) {
-		LinkedList<Action> actions = new LinkedList<Action>();
-		
-		State<T> currState = goalState;
-		while (currState.getCameFrom() != null) {			
-			actions.addFirst(currState.getAction());
-			currState = currState.getCameFrom();
-		}
-		
-		Solution sol = new Solution();
-		sol.setActions(actions);
-		return sol;
+	public CommonSearcher()
+	{
+		finalState=null;
+		openList=new PriorityQueue<>(new Comparator<State<T>>()
+		{
+
+			@Override
+			public int compare(State<T> arg0, State<T> arg1)
+			{
+				// TODO Auto-generated method stub
+				return (int)(arg0.getCost()-arg1.getCost());
+			}
+		});
+		evaluatedNodes=0;
 	}
 	
-	protected State<T> popOpenList() {
+	protected State<T> popOpenList()
+	{
 		evaluatedNodes++;
 		return openList.poll();
 	}
-	
-	protected void addToOpenList(State<T> s){
-		this.openList.add(s);
+
+
+	public CommonSearcher(int evaluatedNodes, PriorityQueue<State<T>> openList) {
+		super();
+		this.evaluatedNodes = evaluatedNodes;
+		this.openList = openList;
 	}
-	
-	protected boolean openListContains(State<T> s){
-		return this.openList.contains(s);
+
+
+
+	public State<T> getFinalState()
+	{
+		return finalState;
 	}
+
+
+
+	public void setFinalState(State<T> finalState)
+	{
+		this.finalState = finalState;
+	}
+
+
+
+	public int getEvaluatedNodes()
+	{
+		return evaluatedNodes;
+	}
+
+
+
+	public void setEvaluatedNodes(int evaluatedNodes)
+	{
+		this.evaluatedNodes = evaluatedNodes;
+	}
+
+
+
+	public PriorityQueue<State<T>> getOpenList()
+	{
+		return openList;
+	}
+
+
+
+	public void setOpenList(PriorityQueue<State<T>> openList)
+	{
+		this.openList = openList;
+	}
+
+
+	
+
 }

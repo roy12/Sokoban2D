@@ -26,11 +26,53 @@ public class Clause extends Predicate{
 		}
 	}
 
-	public void update(Clause effect) {
-		effect.predicates.forEach((Predicate p)->predicates.removeIf((Predicate pr)->p.contradicts(pr)));
-		predicates.addAll(effect.predicates);
-		updateDescription();
-	}  
+	public void update(Predicate effect) {
+		{
+			HashSet<Predicate> removeablePredicates = new HashSet<>();
+			if (predicates.size() > 0) {
+				for (Predicate p : predicates) {
+					if (p != null) {
+						if (effect instanceof Clause) {
+							if (p.isContradict( (Clause) effect))
+
+								removeablePredicates.add(p);
+						} else {
+
+							if (p.isContradict(effect))
+
+								removeablePredicates.add(p);
+						}
+					}
+				}
+				predicates.removeAll(removeablePredicates);
+				if(effect instanceof Clause)
+					updateClause((Clause)effect);
+				else
+					this.predicates.add(effect);
+				updateDescription();
+			} else {
+				predicates.add(effect);
+
+				updateDescription();
+			}
+
+		}
+	}
+	
+	private void updateClause(Clause c)
+	{
+		for(Predicate p : c.getPredicates())
+		{
+			if(p instanceof Clause)
+			{
+				updateClause((Clause)p);
+			}
+			else
+				this.predicates.add(p);
+		}
+	}
+	
+	
 	
 	public void add(Predicate p){
 		if(predicates==null)

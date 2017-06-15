@@ -1,24 +1,32 @@
  package search;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import plan.Clause;
 import plan.Predicate;
 
-public abstract class Action extends Predicate{
+public abstract class Action {
 	
+	private EnumAction ea;
+	private LinkedList<EnumAction> history;
+	
+	public LinkedList<EnumAction> getPath()
+	{
+		
+		LinkedList<EnumAction> list=new LinkedList<>();
+		
+		if(history!=null)
+		{
+			for(int i=0;i<history.size();i++)
+				list.addLast((EnumAction) history.toArray()[i]);
+		}
+		list.addLast(ea);
 
-	protected String name;
-	protected String[] args;
-	public List<Predicate> preconditions = new ArrayList<Predicate>();
-	protected List<Predicate> addList = new ArrayList<Predicate>();
-	protected List<Predicate> deleteList = new ArrayList<Predicate>();
-	protected Map<String, List<String>> illegalAssignments = new HashMap<>();
-	public Clause effects;
-	public EnumAction ea;
-	
+		return list;
+	}
 	
 	public EnumAction getEa() {
 		return ea;
@@ -27,40 +35,30 @@ public abstract class Action extends Predicate{
 	public void setEa(EnumAction ea) {
 		this.ea = ea;
 	}
-
-	public Action(String type, String id, String value) {
-		super(type, id, value);
-		
+	public LinkedList<EnumAction> getHistory() {
+		return history;
 	}
 
-	public List<Predicate> getPreconditions() {
-		return preconditions;
+	public void setHistory(LinkedList<EnumAction> history) {
+		this.history = history;
 	}
-
-	public List<Predicate> getAddList() {
-		return addList;
+	
+	public String toString()
+	{
+		String str="";
+		if (this.history!=null)
+		{
+			for(EnumAction a: this.history)
+				str+=a.toString()+",";
+		}
+		if(this.ea!=null)
+			str+=this.ea+",";
+		return str;		
 	}
-
-	public List<Predicate> getDeleteList() {
-		return deleteList;
-	}
-
-	public Map<String, List<String>> getIllegalAssignments() {
-		return illegalAssignments;
-	}
-
-	public void setIllegalAssignments(Map<String, List<String>> illegalAssignments) {
-		this.illegalAssignments = illegalAssignments;
-	}
-
-	public Action instantiate(Map<String, Object> assignment) {
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
-
-	public String getName() {
-		return name;
-	}
-
+	public Action(EnumAction ea, LinkedList<EnumAction> history) {
+		super();
+		this.ea = ea;
+		this.history = history;
+	}	
+	
 }

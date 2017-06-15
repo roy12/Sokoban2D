@@ -4,24 +4,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Solution {
-	private LinkedList<Action> actions = new LinkedList<Action>();
+	private LinkedList<EnumAction> ea = new LinkedList<EnumAction>();
 
-	public List<Action> getActions() {
-		return actions;
+	public Solution(LinkedList<EnumAction> solution) {
+		super();
+		this.ea = solution;
+	}
+	public Solution() {
+		super();
+		ea=new LinkedList<>();
+	}
+	public List<EnumAction> getEa() {
+		return ea;
 	}
 
-	public void setActions(LinkedList<Action> actions) {
-		this.actions = actions;
-	}
+	public void setEa(LinkedList<EnumAction> actions) {
+		this.ea = actions;
+	}	
 	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		
-		for (Action a : actions) {
-			sb.append(a.getName()).append("\n");
+	public void showSolution()
+	{
+		if (ea!=null)
+		{
+			for (EnumAction action : ea)
+			{
+				System.out.println(action.toString()+" ");
+			}
 		}
-		
-		return sb.toString();
 	}
 }

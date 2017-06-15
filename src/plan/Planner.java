@@ -6,5 +6,5 @@ import search.Action;
 
 public interface Planner {
 
-	List<Action> plan(Plannable plannable);
+	public List<PlanAction> plan(Plannable plannable); 
 }

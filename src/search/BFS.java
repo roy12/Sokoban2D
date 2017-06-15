@@ -1,40 +1,78 @@
 package search;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 
 
-public class BFS<T> extends CommonSearcher<T> {
-
+public class BFS<T> extends CommonSearcher<T>
+{
 	@Override
-	public int getNumberOfNodesEvaluated() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Solution search(Searchable<T> s) {
-		addToOpenList(s.getInitialState());
-		HashSet<State<T>> closedSet=new HashSet<State<T>>();
-		while(openList.size() > 0){
-			State<T> n=popOpenList();// dequeue
-			closedSet.add(n);
-			if(n.equals(s.getGoalState()))
-				//return backTrace(s.getGoalState(), s.getInitialState());
-				return backTrace(s.getGoalState());
-			
-			// private method, back traces through the parents
-			ArrayList<State<T>> successors=s.getAllPossibleStates(n); //however it is implemented
-			for(State<T> state : successors){
-				if(!closedSet.contains(state) && !openListContains(state)){
-					state.setCameFrom(n);
-					addToOpenList(state);
-				} else{
-					// else do nothing
-				}
+	public Solution search(Searchable<T> searchable)
+	{
+		openList=new PriorityQueue<>(new Comparator<State<T>>()
+		{	
+			public int compare(State<T> arg0, State<T> arg1)
+			{
+				// TODO Auto-generated method stub
+				return (int)(arg0.getCost()-arg1.getCost());
 			}
+		});	
+		HashSet<State<T>> closed=new HashSet<>();
+		closed.clear();
+		State<T> state=searchable.getInitialState();
+		//state.setCameFrom(getFinalState());
+		this.openList.add(state);
+		State<T> currentState=null;
+		while(!this.openList.isEmpty())
+		{
+			currentState=this.openList.poll();
+			this.evaluatedNodes++;
+			closed.add(currentState);
+			if(currentState.equals(searchable.getGoalState()))
+					{
+			
+						Solution solution=new Solution();
+						solution.setEa(backTrace(currentState));
+						setFinalState(currentState);
+						return solution;
+					}
+			HashMap<Action,State<T>> map=searchable.getAllPossibleStates(currentState);
+
+				for(Action action : map.keySet())
+				{
+					State<T> s=map.get(action);
+					if(!closed.contains(s))
+					{
+						if(!openList.contains(s))
+							openList.add(s);
+						else
+						{
+							for(State<T> os : openList)
+							{
+								if(os.equals(s))
+								{
+									if(s.getCost()<os.getCost())
+									{
+										openList.remove(os);
+										os.setCost(s.getCost());
+										openList.add(os);
+									}
+								}
+							}
+						}
+					}
+				}			
 		}
-		// throw exception or return null;
-		return null;
+		return null;		
 	}
+
+	public BFS() 
+	{
+		super();		
+	}
+	
+	
 }

@@ -9,55 +9,76 @@ import search.Action;
 
 public class Strips  implements Planner{
 
-	private Plannable plannable;
+	private Plannable myPlannable;
 
-	/*
-	 * (non-Javadoc)
-	 * @see strips.Planner#plan(strips.Plannable)
-Push goal into the stack
-Repeat until stack is empty
-If top is a multipart goal, push unsatisfied sub-goals into the stack V
-If top is a single unsatisfied goal, V
-Replace it with an action that satisfies the goal V
-Push the action preconditions into the stack V
-If top is an action, V
-Pop it from the stack V
-Simulate its execution and update the knowledge base with its effects V
-Add the action to the plan V
-If top is a satisfied goal, pop it from the stack V
-	 */
 	@Override
-	public List<Action> plan(Plannable plannable) {
-		LinkedList<Action> plan=new LinkedList<>();
-		this.plannable=plannable;
-		Stack<Predicate> stack=new Stack<>();
-		stack.push(plannable.getGoal());
-		while(!stack.isEmpty()){
-			Predicate top=stack.peek();
-			if(! (top instanceof Action)){
-				if(!plannable.getKnowledgebase().satisfies(top)){ // unsatisfied
-					if(top instanceof Clause){ // multipart
-						Clause c=(Clause)top; 
-						for(Predicate p : c.predicates){
-							stack.push(p);
-						}
-					}else{ // single and unsatisfied
-						stack.pop();
-						Action action=plannable.getsatisfyingAction(top);
-						stack.push(action);
-						stack.push((Predicate) action.preconditions);
+	public List<PlanAction> plan(Plannable plannable)
+	{		
+		Stack<Predicate> predicatesStack = new Stack<>();
+		LinkedList<PlanAction> plan=new LinkedList<>();
+		this.myPlannable = plannable;
+		predicatesStack.push(plannable.getGoal());
+		Predicate topPredicate = null;
+		while (!predicatesStack.isEmpty()) {
+			topPredicate = predicatesStack.peek();
+			if (!(topPredicate instanceof PlanAction))
+			{
+				if (!plannable.getKnowledgebase().satisfies(topPredicate))//unsatisfied
+				{
+					if(topPredicate instanceof Clause)//multiple and unsatisfied
+					{
+						Clause c=(Clause) topPredicate;
+						for(Predicate p : c.getPredicates() )
+							predicatesStack.push(p);
 					}
-				}else{
-					stack.pop();
+					else//single and unsatisfied
+					{
+						predicatesStack.pop();
+						Set<PlanAction> actions=plannable.getSatisfyingActions(topPredicate);
+						if(actions!=null)
+						{
+							for (PlanAction a : actions)
+							{
+								predicatesStack.push(a);
+								predicatesStack.push(a.getPreConditions());
+							}
+						}
+						else
+						{
+							if(predicatesStack.size()>1)//there is another predicate
+							{
+								System.out.println("trying another way");
+								predicatesStack.pop();
+								Predicate p=predicatesStack.pop();
+								predicatesStack.push(topPredicate);
+							}
+							else
+							{
+								System.out.println("*****block*****");
+								return null;
+							}
+						}
+					}
+				} 
+				else
+				{
+					predicatesStack.pop();
 				}
-			}else{ // top is an action at the top of the stack
-				stack.pop();
-				Action a=(Action)top;
-				plannable.getKnowledgebase().update(a.effects);
-				plan.add(a);
+			}
+			else//top is action
+			{
+				predicatesStack.pop();
+				PlanAction action=(PlanAction)topPredicate;
+				plannable.getKnowledgebase().update(action.getEffects());
+				plan.addLast(action);
 			}
 		}
+
 		return plan;
+	}
+
+	public Strips() {
+		super();		
 	}
 
 }
