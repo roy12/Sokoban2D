@@ -1,7 +1,7 @@
  package search;
 import java.util.LinkedList;
 
-public abstract class Action {
+public class Action {
 	
 	private EnumAction ea;
 	private LinkedList<EnumAction> history;

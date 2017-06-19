@@ -2,7 +2,6 @@ package sokobanSolver;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import levels.GameObject;
 import levels.Level;
 import levels.Position;
@@ -42,24 +41,24 @@ public class PlayerSearchable extends CommonSearchable {
 		Position currentPos=s.getState();
 		Position pos=currentPos;
 		if(checkPossibleMove(currentPos,EnumAction.Up))
-		{			
+		{				
 			pos.setX(pos.getX()-1);
-			possibleStates.put(new Action(EnumAction.Up,null), new State<>(s,s.getCost()+1,pos,new Action(EnumAction.Up, null)));
+			possibleStates.put(new Action(EnumAction.Up,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Up, null)));
 		}
 		if(checkPossibleMove(currentPos,EnumAction.Down))
 		{			
 			pos.setX(pos.getX()+1);
-			possibleStates.put(new Action(EnumAction.Down,null), new State<>(s,s.getCost()+1,pos,new Action(EnumAction.Down, null)));
+			possibleStates.put(new Action(EnumAction.Down,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Down, null)));
 		}
 		if(checkPossibleMove(currentPos,EnumAction.Right))
 		{			
 			pos.setY(pos.getY()+1);
-			possibleStates.put(new Action(EnumAction.Right,null), new State<>(s,s.getCost()+1,pos,new Action(EnumAction.Right, null)));
+			possibleStates.put(new Action(EnumAction.Right,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Right, null)));
 		}
 		if(checkPossibleMove(currentPos,EnumAction.Left))
 		{			
 			pos.setY(pos.getY()-1);
-			possibleStates.put(new Action(EnumAction.Left,null), new State<>(s,s.getCost()+1,pos,new Action(EnumAction.Left, null)));
+			possibleStates.put(new Action(EnumAction.Left,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Left, null)));
 		}
 		
 		return possibleStates;
