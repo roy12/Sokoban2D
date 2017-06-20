@@ -11,7 +11,7 @@ public class SokSolver {
 	
 	public SokSolution solveLevel(Level lvl) 
 	{ 
-		SokPlannable ps=new SokPlannable(lvl); 
+	SokPlannable ps=new SokPlannable(lvl); 
 	Strips strips=new Strips(); 
 	List<PlanAction> list=strips.plan(ps); 
 	solution=new SokSolution(list);		 

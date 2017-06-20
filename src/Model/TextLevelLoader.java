@@ -13,6 +13,7 @@ import levels.Level;
 import levels.Player;
 import levels.Position;
 import levels.Space;
+import levels.Target;
 
 public class TextLevelLoader implements LevelLoader{
 	
@@ -79,7 +80,8 @@ public class TextLevelLoader implements LevelLoader{
 							Floor f=new Floor(true,false,new Space());
 							map[i][j] = f ;
 							numOfTargets++;
-							targets.add(f);
+							Target t=new Target(new Position(i, j));
+							targets.add(t);
 						}
 						else if(charArr[j]=='@')
 						{	Floor f=new Floor(false,true,new Box(new Position(i, j)));
