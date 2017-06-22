@@ -8,15 +8,15 @@ import levels.Position;
 public class State<T> {
 	private State<T> cameFrom;
 	private Action action;
-	private Level lvl;
 	private T state;
 	private double cost;
-	private List<Position> boxesPos;
+	
 	
 	public State(State<T> s) {
 		this.cameFrom=s.cameFrom;
 		this.action=s.action;
-		this.lvl=s.lvl;		
+		this.state=s.state;
+		this.cost=s.cost;
 	}
 	public State(State<T> cameFrom,double cost,T state,Action a)
 	{
@@ -24,10 +24,13 @@ public class State<T> {
 		this.cost=cost;
 		this.state=state;
 		this.action=a;
-	}
-	
+	}	
 	public State() {
-		// TODO Auto-generated constructor stub
+		super();		
+		this.cameFrom=null;
+		this.cost=1000;
+		this.action=null;
+		this.state=null;
 	}
 	public State<T> getCameFrom(){
 		return cameFrom;
@@ -40,15 +43,6 @@ public class State<T> {
 	public Action getAction() {
 		return action;
 	}
-
-	public Level getLvl() {
-		return lvl;
-	}
-
-	public void setLvl(Level lvl) {
-		this.lvl = lvl;
-	}
-
 	public T getState() {
 		return state;
 	}
@@ -64,5 +58,13 @@ public class State<T> {
 	}
 	public void setAction(Action action) {
 		this.action = action;
+	}
+	public boolean equals(Object obj)
+	{		
+		return state.equals(((State)obj).state);		
+	}
+	public int hashCode()
+	{
+		return state.hashCode();		
 	}
 }

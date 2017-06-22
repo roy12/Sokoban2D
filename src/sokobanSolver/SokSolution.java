@@ -12,15 +12,22 @@ public class SokSolution {
 	
 	public SokSolution(List<PlanAction> solutionList) 
 	{ 
-		super(); 
-		solution=new LinkedList<>(); 
-		for (PlanAction pa : solutionList) 
-		{ 
-			for(EnumAction action : pa.getSubActions()) 
+		super();
+		if (solutionList!=null)
+		{
+			solution=new LinkedList<>(); 
+			for (PlanAction pa : solutionList) 
 			{ 
-				solution.add(action); 
-			} 
-		} 
+				for(EnumAction action : pa.getSubActions()) 
+				{ 
+					solution.add(action); 
+				} 
+			}
+		}
+		else
+		{
+			solution=null;
+		}
 	}
 	
 	public void print() 
@@ -36,7 +43,7 @@ public class SokSolution {
 		{ 
 			str+=ea.toString(); 
 			str+=" "; 
-		} 
+		}		
 	return str; 
 	} 
 

@@ -25,7 +25,8 @@ public class Test {
 		//arg0Suffix=args[0].substring(args[0].length()-3, args[0].length()); 
 		try { 
 			//lvl=(Level) tll.loadLevel((new FileInputStream(new File(args[0])))); 
-			lvl=(Level) tll.loadLevel((new FileInputStream(new File("recources\\levels\\Level1.txt  ")))); 
+			lvl=(Level) tll.loadLevel((new FileInputStream(new File("recources\\levels\\Level1.txt")))); 
+			lvl.printLevel();
 			SokSolver sokobanSolver=new SokSolver(); 
 			Writer writer=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(args[1])))); 
 			writer.write(sokobanSolver.solveLevel(lvl).toString()); 

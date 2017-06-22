@@ -131,26 +131,27 @@ public class SokSearchable implements Searchable<SokState> {
 	}
 	public State<SokState> createState(State<SokState> state, Action action)
 	{
-		Position firstPos=state.getLvl().getPl();
-		Position secondPos=state.getLvl().getPl();
-		State<SokState> createdState=new State();
+		State<SokState> createdState=new State(); 
+		Position firstPos=null; 
+		Position secondPos=null; 
+
 		switch (action.getEa()) 
 		{
 		case Up:			
-			firstPos.setX(firstPos.getX()-1);
-			secondPos.setX(secondPos.getX()-2);
+			firstPos=state.getState().getPlayerPosition().getUp();
+			secondPos=firstPos.getUp();
 			break;
 		case Down:			
-			firstPos.setX(firstPos.getX()+1);
-			secondPos.setX(secondPos.getX()+2);
+			firstPos=state.getState().getPlayerPosition().getDown(); 
+			secondPos=firstPos.getDown(); 
 			break;
 		case Right:			
-			firstPos.setY(firstPos.getY()+1);
-			secondPos.setY(secondPos.getY()+2);
+			firstPos=state.getState().getPlayerPosition().getLeft(); 
+			secondPos=firstPos.getLeft(); 
 			break;
 		case Left:			
-			firstPos.setY(firstPos.getY()-1);
-			secondPos.setY(secondPos.getY()-2);
+			firstPos=state.getState().getPlayerPosition().getRight(); 
+			secondPos=firstPos.getRight(); 
 			break;	
 		}
 		createdState.setState(new SokState());
@@ -158,11 +159,11 @@ public class SokSearchable implements Searchable<SokState> {
 		{
 			if(p.equals(firstPos))
 			{
-				//createdState.getstate().getBoxPosition().add(secondPos);
+				createdState.getState().getBoxPosition().add(secondPos);
 			}
 			else
 			{
-				//createdState.getstate().getBoxPosition().add(p);
+				createdState.getState().getBoxPosition().add(p);
 			}
 		
 		}

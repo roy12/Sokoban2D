@@ -22,15 +22,24 @@ public class BoxSearchable extends CommonSearchable{
 	private PlayerSearchable playerSearchable;
 	private Position playerPosition;
 	private char [][] charMap;
-	private LinkedList<Position> boxPosition;
-	private Position currentBoxSearchable;
+	private LinkedList<Position> currentBoxPositions;
+	private Position currentSearchableBox;
 	
+	public void print()
+	{
+		System.out.println(searcher);
+		System.out.println(playerSearchable);
+		System.out.println(playerPosition);
+		System.out.println(charMap);
+		System.out.println(currentBoxPositions);
+		System.out.println(currentSearchableBox);
+	}
 
 	public BoxSearchable (Position firstPos, Position secondPos, Level lvl,Searcher<Position> searcher,PlayerSearchable playerSearchable) {
-		super(lvl,firstPos, secondPos);
-		boxPosition=new LinkedList<>();
+		super(lvl,firstPos, secondPos);		
+		currentBoxPositions=new LinkedList<>();
 		for(GameObject it : lvl.getBoxes())
-			boxPosition.add(it.getPos());
+			currentBoxPositions.add(it.getPos());
 		this.searcher=searcher;
 		this.playerSearchable=playerSearchable;
 		if(playerSearchable!=null)
@@ -68,40 +77,86 @@ public class BoxSearchable extends CommonSearchable{
 	}
 
 	public Position getPlayerNextPos (Position boxPos,EnumAction action)
-	{
-		Position pos=boxPos;
-		switch(action)
+	{	switch(action)
 		{
 		case Up:
-			pos.setX(pos.getX()+1);
+			return boxPos.getDown();
 		case Down:
-			pos.setX(pos.getX()-1);
+			return boxPos.getUp();
 		case Right:
-			pos.setY(pos.getY()-1);
+			return boxPos.getLeft();
 		case Left:
-			pos.setY(pos.getY()+1);	
+			return boxPos.getRight();
 		}
-		return pos;
+	return null;
 	}
 	
 	public Position getBoxNextPos (Position boxPos,EnumAction action)
-	{
-		Position pos=boxPos;
+	{		
 		switch(action)
 		{
 		case Up:
-			pos.setX(pos.getX()-1);
+			return boxPos.getUp();
 		case Down:
-			pos.setX(pos.getX()+1);
+			return boxPos.getDown();
 		case Right:
-			pos.setY(pos.getY()+1);
+			return boxPos.getRight();
 		case Left:
-			pos.setY(pos.getY()-1);	
+			return boxPos.getLeft();
 		}
-		return pos;
+		return null;
 	}
 	
 	public HashMap<Action, State<Position>> getAllPossibleStates(State<Position> s)
+	{
+		Position temp=null; 
+		//updating player/box positions for checking possibles moves 
+		if(s.getCameFrom()!=null)//its not the initial state 
+		{ 
+		temp=s.getCameFrom().getState(); 
+		playerPosition=temp; 
+		currentBoxPositions.remove(currentSearchableBox); 
+		currentBoxPositions.add(s.getState()); 
+		playerSearchable.setCurrentBoxPositions(currentBoxPositions); 
+		//System.out.println(currentBoxPositions); 
+		} 
+				 		 
+		Solution playerPath=null; 
+		playerSearchable.setFirstPos(playerPosition); 
+		playerSearchable.setLvl(getLvl()); 
+		State<Position> state=null; 
+		Position boxNextPos=null; 
+		Action a=null; 
+		HashMap<Action, State<Position>> possibleStates=new HashMap<>(); 
+		Position boxPos=s.getState(); 
+		for(EnumAction action: EnumAction.values()) 
+		{ 
+			if(this.checkPossibleMove(boxPos, action)) 
+		 	{ 
+				playerSearchable.setFirstPos(playerPosition); 
+		 		playerSearchable.setSecondPos(this.getPlayerNextPos(boxPos, action)); 
+		 		playerSearchable.setLvl(getLvl()); 
+		 		playerPath=searcher.search(playerSearchable); 
+		 		if(playerPath!=null) 
+		 		{ 
+		 			boxNextPos=this.getBoxNextPos(boxPos, action); 
+		 			a=new Action(action, (LinkedList<EnumAction>) playerPath.getEa()); 
+		 			state=new State<Position>(s, s.getCost()+1,boxNextPos , a); 
+					possibleStates.put(a, state); 
+				} 
+			} 
+		}
+		
+		if(s.getCameFrom()!=null) 
+		{ 
+		 currentBoxPositions.remove(s.getState()); 
+		 currentBoxPositions.add(currentSearchableBox); 
+		 //System.out.println(currentBoxPositions); 
+		} 
+		return possibleStates; 
+	}
+	
+	/*public HashMap<Action, State<Position>> getAllPossibleStates(State<Position> s)
 	{
 		Position temp=null;
 		if(s.getCameFrom()!=null)
@@ -128,11 +183,11 @@ public class BoxSearchable extends CommonSearchable{
 				playerSearchable.setFirstPos(playerPosition);
 				playerSearchable.setSecondPos(this.getPlayerNextPos(boxPos, action));
 				playerSearchable.setLvl(getLvl());
-				playerPath=searcher.search(playerSearchable);
+				playerPath=searcher.search(playerSearchable);				
 				if(playerPath!=null)
 				{
 					boxNextPos=this.getBoxNextPos(boxPos, action);
-					//a=new Action(action,playerPath.getActionList())
+					a=new Action(action,(LinkedList<EnumAction>) playerPath.getEa());
 					state=new State<Position>(s,s.getCost()+1,boxNextPos,a);
 					possibleStates.put(a, state);
 				}
@@ -142,43 +197,36 @@ public class BoxSearchable extends CommonSearchable{
 		{
 			boxPosition.remove(s.getState());
 			boxPosition.add(currentBoxSearchable);
-		}
-		
+		}		
 		return possibleStates;
-	}
+	}*/
 	
 	public boolean checkPossibleMove(Position currentPosition, EnumAction ea)
 	{
-		Position playerPos=null;
-		Position goalPos=null;
-		Position pos1=currentPosition;
-		Position pos2=currentPosition;
+		Position playerPos=null; 
+		Position goalPos=null; 
 		switch(ea)
 		{
 		case Up:
-			pos1.setX(pos1.getX()+1);
-			pos2.setX(pos2.getX()-1);
-			playerPos=pos1;
-			goalPos=pos2;
-			break;
+			playerPos=currentPosition.getDown(); 
+			goalPos=currentPosition.getUp(); 
+			break; 
+
 		case Down:
-			pos1.setX(pos1.getX()-1);
-			pos2.setX(pos2.getX()+1);
-			playerPos=pos1;
-			goalPos=pos2;
-			break;
+			playerPos=currentPosition.getUp(); 
+			goalPos=currentPosition.getDown();			 
+			break; 
+
 		case Right:
-			pos1.setY(pos1.getY()-1);
-			pos2.setY(pos2.getY()+1);
-			playerPos=pos1;
-			goalPos=pos2;
-			break;
+			playerPos=currentPosition.getLeft(); 
+			goalPos=currentPosition.getRight(); 
+			break; 
+
 		case Left:
-			pos1.setY(pos1.getY()+1);
-			pos2.setY(pos2.getY()-1);
-			playerPos=pos1;
-			goalPos=pos2;
-			break;
+			playerPos=currentPosition.getRight(); 
+			goalPos=currentPosition.getLeft(); 
+			break; 
+
 		}
 		if(this.getLvl().posiblePosition(playerPos)&&this.getLvl().posiblePosition(goalPos))
 		{
@@ -190,7 +238,7 @@ public class BoxSearchable extends CommonSearchable{
 				return false;
 			else
 			{
-				for(Position pos:this.boxPosition)
+				for(Position pos:this.currentBoxPositions)
 				{
 					if(playerPos.equals(pos)||goalPos.equals(pos))
 						return false;
@@ -233,24 +281,20 @@ public class BoxSearchable extends CommonSearchable{
 		this.playerPosition = playerPosition;
 	}
 
-
-	public LinkedList<Position> getBoxPosition() {
-		return boxPosition;
+	public LinkedList<Position> getCurrentBoxPositions() {
+		return currentBoxPositions;
 	}
 
-
-	public void setBoxPosition(LinkedList<Position> boxPosition) {
-		this.boxPosition = boxPosition;
+	public void setCurrentBoxPositions(LinkedList<Position> currentBoxPositions) {
+		this.currentBoxPositions = currentBoxPositions;
 	}
 
-
-	public Position getCurrentBoxSearchable() {
-		return currentBoxSearchable;
+	public Position getCurrentSearchableBox() {
+		return currentSearchableBox;
 	}
 
-
-	public void setCurrentBoxSearchable(Position currentBoxSearchable) {
-		this.currentBoxSearchable = currentBoxSearchable;
+	public void setCurrentSearchableBox(Position currentSearchableBox) {
+		this.currentSearchableBox = currentSearchableBox;
 	}
 	
 	

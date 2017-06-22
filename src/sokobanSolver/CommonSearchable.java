@@ -55,7 +55,7 @@ public abstract class CommonSearchable implements Searchable<Position> {
 	}
 	
 	public State<Position> getGoalState() {
-		State<Position> goal=new State<>(null,0,secondPos,null);
+		State<Position> goal=new State<>(null,1,secondPos,null);
 		return goal;
 	}
 

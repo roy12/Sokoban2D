@@ -17,9 +17,9 @@ public class Clause extends Predicate{
 	
 	public Clause(Predicate...predicates) {
 		super("And", "", "");
-		if(predicates!=null){
-			this.predicates=new HashSet<>();
-			for(Predicate p : predicates){
+		this.predicates = new HashSet<>();
+		if (predicates != null) {
+			for (Predicate p : predicates) {
 				this.predicates.add(p);
 			}
 			updateDescription();
@@ -27,35 +27,41 @@ public class Clause extends Predicate{
 	}
 
 	public void update(Predicate effect) {
-		{
-			HashSet<Predicate> removeablePredicates = new HashSet<>();
-			if (predicates.size() > 0) {
-				for (Predicate p : predicates) {
-					if (p != null) {
-						if (effect instanceof Clause) {
+		{			
+			HashSet<Predicate> removeablePredicates = new HashSet<>();			
+			if (predicates.size() > 0)
+			{			
+				for (Predicate p : predicates) 
+				{					
+					if (p != null) 
+					{
+						if (effect instanceof Clause)
+						{
 							if (p.isContradict( (Clause) effect))
+									removeablePredicates.add(p);
+						} 
+						else
+						{
 
-								removeablePredicates.add(p);
-						} else {
-
-							if (p.isContradict(effect))
+							if (p.contradicts(effect))
 
 								removeablePredicates.add(p);
 						}
-					}
-				}
+					}					
+				}				
 				predicates.removeAll(removeablePredicates);
 				if(effect instanceof Clause)
 					updateClause((Clause)effect);
 				else
 					this.predicates.add(effect);
-				updateDescription();
-			} else {
-				predicates.add(effect);
-
-				updateDescription();
+				updateDescription();				
 			}
-
+			else 
+			{				
+				predicates.add(effect);
+				updateDescription();
+			}		
+ 
 		}
 	}
 	
@@ -82,13 +88,25 @@ public class Clause extends Predicate{
 	}
 	
 	@Override
-	public boolean satisfies(Predicate p){
-		for(Predicate pr : predicates)
-			if(pr.satisfies(p))
-				return true;
-		return false;
+	public boolean satisfies(Predicate p)
+	{			
+		if (p instanceof Clause)
+		{				
+			return satisfiesC((Clause)p);
+		}
+		else
+		{			
+			for(Predicate pr : predicates)
+			{
+				if(pr.satisfies(p))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
-	public boolean isContradictClause(Clause c)
+	public boolean isContradict(Clause c)
 	{
 		for (Predicate p : c.getPredicates()) {
 			if (!isContradict(p))
@@ -98,8 +116,8 @@ public class Clause extends Predicate{
 
 	}
 	
-	public boolean satisfies(Clause clause){
-		for(Predicate p : clause.predicates){
+	public boolean satisfiesC(Clause clause){
+		for(Predicate p : clause.getPredicates()){
 			if(!satisfies(p))
 				return false;
 		}

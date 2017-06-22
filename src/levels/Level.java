@@ -150,5 +150,16 @@ public Level() {
 		GameObject go=map[p.getX()][p.getY()];		
 		return go;
 	}
+	public void printLevel()
+	{
+		for(int i=0;i<height;i++)
+		{
+			for(int j=0;j<width;j++)
+			{
+				System.out.print(map[i][j].getType());
+			}
+			System.out.println();
+		}
+	}
 	
 }

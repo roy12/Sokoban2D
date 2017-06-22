@@ -42,46 +42,50 @@ public class SokPlannable implements Plannable {
 		{
 			kb=new Clause(null); 
 			goal=new Clause(null); 
-			Predicate p = null; 
+			SokPredicate p = null; 
 			Clause g = new Clause(null);
 			int boxesCounter=1;
 			
 			for (int i=0;i<lvl.getWidth();i++)
 			{
 				for(int j=0;j<lvl.getHeight();j++)
-				{
-					switch(lvl.getMap()[i][j].getChar()) 
+				{	
+					
+					switch(lvl.getMap()[i][j].getType()) 
 					{ 
-					case 'A': 
+					case 'A': 						
 						p=new SokPredicate("PlayerAt", "Player", "("+i+","+j+")"); 
 						playerPosition=new Position(i, j); 
-						kb.update(p); 										 
+						kb.update(p);					
 						break; 
-					case ' ': 
+					case ' ': 						
 						p=new SokPredicate("ClearAt", "("+i+","+j+")" , "("+i+","+j+")"); 
-						kb.update(p);									 
+						kb.update(p);						
 						break; 
-					case '@': 
+					case '@': 					
 						p=new SokPredicate("BoxAt", "b"+boxesCounter, "("+i+","+j+")"); 
 						boxesPositions.add(new Position(i, j)); 
 						kb.update(p);							 
-						boxesCounter++; 
+						boxesCounter++;						
 						break; 
-					case 'o': 
+					case 'o': 						
 						p=new SokPredicate("ClearAt", "("+i+","+j+")" , "("+i+","+j+")"); 
-						kb.update(p); 
+						kb.update(p);						
 						break;
-					}
-				}
-				HashMap<String, String> hm= this.getBoxesAndDestCoupled(lvl); 
-				for(String id : hm.keySet()) 
-				{ 
-					p=new SokPredicate("BoxAt", id, hm.get(id)); 
-					goal.update(p); 
-				} 
-				boxSearchable=new BoxSearchable(playerPosition, playerPosition, lvl, mainBFS, new PlayerSearchable(lvl, playerPosition, playerPosition)); 
-				boxSearchable.getPlayerSearchable().setBoxPositions(boxesPositions);		 
+					case '#':						
+						break;
+					}				
+				}				
 			}
+			HashMap<String, String> hm= this.getBoxesAndDestCoupled(lvl);			
+			for(String id : hm.keySet()) 
+				{				
+					p=new SokPredicate("BoxAt", id, hm.get(id));					
+					goal.update(p); 
+				}			
+			boxSearchable=new BoxSearchable(playerPosition, playerPosition, lvl, mainBFS, new PlayerSearchable(lvl, playerPosition, playerPosition)); 
+			boxSearchable.getPlayerSearchable().setCurrentBoxPositions(boxesPositions);		 
+			
 		}
 	}
 	
@@ -111,17 +115,16 @@ public class SokPlannable implements Plannable {
 	@Override
 	public Clause getGoal() {
 		
-		return null;
+		return this.goal;
 	}
 
 	@Override
-	public Clause getKnowledgebase() {
-		
-		return null;
+	public Clause getKnowledgebase() {		
+		return this.kb;
 	}
 
 	
-	public Set<PlanAction> getsatisfyingActions(Predicate top) {
+	public Set<PlanAction> getSatisfyingActions(Predicate top) {		
 		Set<PlanAction> satisfyingActions=null;
 		Predicate boxKbPred=null; 
 		Predicate playerKbPred=null; 
@@ -131,25 +134,30 @@ public class SokPlannable implements Plannable {
 			for(Predicate p : kb.getPredicates())
 			{
 				if(top.getId().equals(p.getId()))
+				{
 					boxKbPred=p;
+				}
 				if(p.getType().equals("PlayerAt"))
+				{					
 					playerKbPred=p;
+				}				
 			}
 			
-			playerPos=new Position(playerKbPred.getValue().toCharArray()[1]-48, playerKbPred.getValue().toCharArray()[3]-48); 
+			playerPos=new Position(playerKbPred.getValue().toCharArray()[1]-48, playerKbPred.getValue().toCharArray()[3]-48);			
 			boxPos=new Position(boxKbPred.getValue().toCharArray()[1]-48, boxKbPred.getValue().toCharArray()[3]-48); 
-			goalPos=new Position(top.getValue().toCharArray()[1]-48, top.getValue().toCharArray()[3]-48); 
+			goalPos=new Position(top.getValue().toCharArray()[1]-48, top.getValue().toCharArray()[3]-48); 		
 			PlayerSearchable ps=new PlayerSearchable(lvl,playerPos, boxPos); 
-			ps.setBoxPositions(boxesPositions); 
+			ps.setCurrentBoxPositions(boxesPositions); 
 			BFS pbfs=new BFS<>(); 
 			boxSearchable.setFirstPos(boxPos); 
 			boxSearchable.setSecondPos(goalPos); 
 			boxSearchable.setSearcher(pbfs); 
 			boxSearchable.setPlayerPosition(playerPos); 
-			boxSearchable.setBoxPosition(boxesPositions); 
-			boxSearchable.setCurrentBoxSearchable(boxPos); 
+			boxSearchable.setCurrentBoxPositions(boxesPositions); 
+			boxSearchable.setCurrentSearchableBox(boxPos);	
 			Solution solution=mainBFS.search(boxSearchable); 
-
+		
+			
 			if(solution != null)
 			{
 				
@@ -167,8 +175,11 @@ public class SokPlannable implements Plannable {
 				satisfyingActions.add(pa); 
 				} 
 			else 
-				return null; 
+			{				
+				return null;
+			}
 		}
+		System.out.println("working");
 		return satisfyingActions;		
 	}
 	private Clause getSolutionPreConditions(Solution solution,Position pos)
@@ -203,14 +214,4 @@ public class SokPlannable implements Plannable {
 
 		return pre;
 	}
-
-	
-	
-
-	@Override
-	public Set<PlanAction> getSatisfyingActions(Predicate topPredicate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

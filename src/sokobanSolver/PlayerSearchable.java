@@ -15,74 +15,64 @@ import search.State;
 
 public class PlayerSearchable extends CommonSearchable {
 	
-	private LinkedList<Position> BoxPositions;
+	private LinkedList<Position> currentBoxPositions;
 	private char[][] charMap;
 
 	public PlayerSearchable(Level lvl, Position firstPos, Position secondPos) {
 		super(lvl, firstPos, secondPos);
 	
-	}
-
-	public void setCurrentBoxPos(LinkedList<Position> boxPosition) {		
-		
-	}
-
-	public LinkedList<Position> getBoxPositions() {
-		return BoxPositions;
-	}
-
-	public void setBoxPositions(LinkedList<Position> boxPositions) {
-		BoxPositions = boxPositions;
-	}
+	}	
 	
+	public LinkedList<Position> getCurrentBoxPositions() {
+		return currentBoxPositions;
+	}
+
+	public void setCurrentBoxPositions(LinkedList<Position> currentBoxPositions) {
+		this.currentBoxPositions = currentBoxPositions;
+	}
+
 	public HashMap<Action, State<Position>> getAllPossibleStates(State<Position> s)
 	{
 		HashMap<Action,State<Position>> possibleStates=new HashMap<>();
-		Position currentPos=s.getState();
-		Position pos=currentPos;
+		Position currentPos=s.getState();		
 		if(checkPossibleMove(currentPos,EnumAction.Up))
 		{				
-			pos.setX(pos.getX()-1);
-			possibleStates.put(new Action(EnumAction.Up,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Up, null)));
+			possibleStates.put(new Action(EnumAction.Up,null), new State<Position>(s,s.getCost()+1,currentPos.getUp(),new Action(EnumAction.Up, null)));
 		}
 		if(checkPossibleMove(currentPos,EnumAction.Down))
 		{			
-			pos.setX(pos.getX()+1);
-			possibleStates.put(new Action(EnumAction.Down,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Down, null)));
+			possibleStates.put(new Action(EnumAction.Down,null), new State<Position>(s,s.getCost()+1,currentPos.getDown(),new Action(EnumAction.Down, null)));
 		}
 		if(checkPossibleMove(currentPos,EnumAction.Right))
-		{			
-			pos.setY(pos.getY()+1);
-			possibleStates.put(new Action(EnumAction.Right,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Right, null)));
+		{				
+			possibleStates.put(new Action(EnumAction.Right,null), new State<Position>(s,s.getCost()+1,currentPos.getRight(),new Action(EnumAction.Right, null)));
 		}
 		if(checkPossibleMove(currentPos,EnumAction.Left))
 		{			
-			pos.setY(pos.getY()-1);
-			possibleStates.put(new Action(EnumAction.Left,null), new State<Position>(s,s.getCost()+1,pos,new Action(EnumAction.Left, null)));
+			possibleStates.put(new Action(EnumAction.Left,null), new State<Position>(s,s.getCost()+1,currentPos.getLeft(),new Action(EnumAction.Left, null)));
 		}
 		
 		return possibleStates;
 	}
 	
 	public boolean checkPossibleMove(Position currentPos,EnumAction ea)
-	{
-		char c;
+	{	
 		GameObject go=null;
-		Position pos=currentPos;
+		Position pos=null;
 		
 		switch(ea)
 		{
 		case Up:
-			pos.setX(pos.getX()-1);
+			pos=currentPos.getUp();
 			break;
 		case Down:
-			pos.setX(pos.getX()+1);
+			pos=currentPos.getDown();
 			break;
 		case Right:
-			pos.setY(pos.getY()+1);
+			pos=currentPos.getRight();
 			break;
 		case Left:
-			pos.setY(pos.getY()-1);
+			pos=currentPos.getLeft();
 			break;	
 		}
 		
@@ -90,7 +80,7 @@ public class PlayerSearchable extends CommonSearchable {
 		{
 			if(this.getLvl().posiblePosition(pos))
 			{
-				for(Position p : BoxPositions)
+				for(Position p : currentBoxPositions)
 				{
 					if(pos.equals(p))
 						return false;
