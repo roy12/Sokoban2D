@@ -16,11 +16,12 @@ public class RoyTest {
 		TextLevelLoader tll=new TextLevelLoader();
 		
 		try { 			
-			lvl=(Level) tll.loadLevel((new FileInputStream(new File("recources\\levels\\Level1.txt")))); 
+			lvl=(Level) tll.loadLevel((new FileInputStream(new File("recources\\levels\\testlevel.txt")))); 
 			SokSolver sokobanSolver=new SokSolver();
-			lvl.printLevel();				
-			System.out.println(sokobanSolver.solveLevel(lvl).toString());
-					
+			lvl.printLevel();
+			System.out.println();
+			System.out.println("solution:");
+			System.out.println(sokobanSolver.solveLevel(lvl).toString());					
 			} catch (FileNotFoundException e) { 
 			// TODO Auto-generated catch block 
 			e.printStackTrace(); 
@@ -33,3 +34,6 @@ public class RoyTest {
 	}
 
 }
+
+
+

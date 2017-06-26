@@ -54,6 +54,28 @@ public class Position {
 	{
 		return new Position(x,y+1);
 	}
+	public boolean equals(Position p)
+	{
+		if(p.getX()==this.x&&p.getY()==this.y)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if ((this.x == ((Position) obj).x) && (this.y == ((Position) obj).y))
+			return true;
+		else
+			return false;
+
+	}
+
+	@Override
+	public int hashCode() {
+		String code = "(" + Integer.toString(x) + "," + Integer.toString(y) + ")";
+		return code.hashCode();
+	}
 
 
 }

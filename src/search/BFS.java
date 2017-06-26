@@ -32,22 +32,10 @@ public class BFS<T> extends CommonSearcher<T>
 		
 		while(!this.openList.isEmpty())
 		{			
-					
-					if(evaluatedNodes>7)
-					{
-						return null;
-					}
 			currentState=this.openList.poll();
-			this.evaluatedNodes++;	
-			System.out.println();System.out.println();System.out.println();
-			closed.add(currentState);
-			currentState.print();
-			System.out.println("?????");
-			searchable.getGoalState().print();
-			System.out.println();System.out.println();System.out.println();			
+			this.evaluatedNodes++;					
 			if(currentState.equals(searchable.getGoalState()))
 					{	
-						System.out.println("inside");
 						Solution solution=new Solution();
 						solution.setEa(backTrace(currentState));
 						setFinalState(currentState);

@@ -22,22 +22,22 @@ public class Strips  implements Planner{
 		while (!predicatesStack.isEmpty()) {			
 			topPredicate = predicatesStack.peek();		
 			if (!(topPredicate instanceof PlanAction))
-			{System.out.println("1");			
+			{		
 				if (!plannable.getKnowledgebase().satisfies(topPredicate))//unsatisfied
-				{		System.out.println("2");			
+				{				
 					if(topPredicate instanceof Clause)//multiple and unsatisfied
-					{				System.out.println("3");
+					{				
 						Clause c=(Clause) topPredicate;
 						for(Predicate p : c.getPredicates() )
 							predicatesStack.push(p);
 					}
 					else//single and unsatisfied
-					{			System.out.println("4");
+					{			
 						predicatesStack.pop();				
 						Set<PlanAction> actions=plannable.getSatisfyingActions(topPredicate);
-						System.out.println("4.5");
+						
 						if(actions!=null)
-						{System.out.println("5");
+						{
 							for (PlanAction a : actions)
 							{
 								predicatesStack.push(a);
@@ -45,16 +45,16 @@ public class Strips  implements Planner{
 							}
 						}
 						else
-						{System.out.println("6");						
+						{						
 							if(predicatesStack.size()>1)//there is another predicate
-							{System.out.println("7");
+							{
 								System.out.println("trying another way");
 								predicatesStack.pop();
 								Predicate p=predicatesStack.pop();
 								predicatesStack.push(topPredicate);								
 							}
 							else
-							{System.out.println("8");
+							{
 								System.out.println("*****block*****");								
 								return null;								
 							}

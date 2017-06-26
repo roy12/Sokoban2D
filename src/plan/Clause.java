@@ -106,15 +106,32 @@ public class Clause extends Predicate{
 			return false;
 		}
 	}
-	public boolean isContradict(Clause c)
-	{
-		for (Predicate p : c.getPredicates()) {
-			if (!isContradict(p))
-				return false;
-		}
-		return true;
+	
+	public boolean isContradict(Predicate p) 
+	{ 
+		if (p instanceof Clause) 
+			return isContradictClause((Clause) p); 
+		else 
+		{ 
+			for (Predicate predicate : predicates)
+			{ 
+				if (p.isContradict(p)) 
+					return true; 
+			} 
+			return false; 
+		} 
+		 
+	} 
 
-	}
+	public boolean isContradictClause(Clause c) 
+	{ 
+		for (Predicate p : c.getPredicates()) { 
+			if (!isContradict(p)) 
+				return false; 
+		} 
+		return true; 	 
+	} 
+
 	
 	public boolean satisfiesC(Clause clause){
 		for(Predicate p : clause.getPredicates()){

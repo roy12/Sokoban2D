@@ -81,8 +81,7 @@ public class SokPlannable implements Plannable {
 			for(String id : hm.keySet()) 
 				{				
 					p=new SokPredicate("BoxAt", id, hm.get(id));					
-					goal.update(p);
-					System.out.println("goal "+goal);
+					goal.update(p);					
 				}			
 			boxSearchable=new BoxSearchable(playerPosition, playerPosition, lvl, mainBFS, new PlayerSearchable(lvl, playerPosition, playerPosition)); 
 			boxSearchable.getPlayerSearchable().setCurrentBoxPositions(boxesPositions);		 
@@ -157,7 +156,7 @@ public class SokPlannable implements Plannable {
 			boxSearchable.setCurrentBoxPositions(boxesPositions); 
 			boxSearchable.setCurrentSearchableBox(boxPos);	
 			Solution solution=mainBFS.search(boxSearchable); 
-			System.out.println("working");
+		
 			
 			if(solution != null)
 			{

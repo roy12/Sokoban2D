@@ -21,11 +21,23 @@ public class Predicate {
 	public boolean isContradict(Predicate p)
 	{
 		if(p instanceof Clause)
-			return isContradict((Clause) p);
+			return isContradictClause((Clause) p);
 		else
 			return type.equals(p.type)&&id.equals(p.id)&&!value.equals(p.value);
 		
 	}
+	public boolean isContradictClause(Clause c) 
+	{ 
+		for(Predicate p : c.getPredicates()) 
+		{ 
+			if(isContradict(p)) 
+				return true; 
+		} 
+		return false;		 
+	} 
+
+	
+	
 	@Override
 	public int hashCode(){
 		return (type+id+value).hashCode();
