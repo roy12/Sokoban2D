@@ -151,55 +151,11 @@ public class BoxSearchable extends CommonSearchable{
 		{ 
 		 currentBoxPositions.remove(s.getState()); 
 		 currentBoxPositions.add(currentSearchableBox); 
-		 //System.out.println(currentBoxPositions); 
+		//System.out.println(currentBoxPositions); 
 		} 
 		return possibleStates; 
 	}
 	
-	/*public HashMap<Action, State<Position>> getAllPossibleStates(State<Position> s)
-	{
-		Position temp=null;
-		if(s.getCameFrom()!=null)
-		{
-			temp=s.getCameFrom().getState();
-			playerPosition=temp;
-			boxPosition.remove(currentBoxSearchable);
-			boxPosition.add(s.getState());
-			playerSearchable.setCurrentBoxPos(boxPosition);
-		}
-		
-		Solution playerPath=null;
-		playerSearchable.setFirstPos(playerPosition);
-		playerSearchable.setLvl(getLvl());
-		State <Position> state=null;
-		Position boxNextPos=null;
-		Action a=null;
-		HashMap<Action, State<Position>> possibleStates=new HashMap<>();
-		Position boxPos=s.getState();
-		for(EnumAction action:EnumAction.values())
-		{
-			if(this.checkPossibleMove(boxPos,action))
-			{
-				playerSearchable.setFirstPos(playerPosition);
-				playerSearchable.setSecondPos(this.getPlayerNextPos(boxPos, action));
-				playerSearchable.setLvl(getLvl());
-				playerPath=searcher.search(playerSearchable);				
-				if(playerPath!=null)
-				{
-					boxNextPos=this.getBoxNextPos(boxPos, action);
-					a=new Action(action,(LinkedList<EnumAction>) playerPath.getEa());
-					state=new State<Position>(s,s.getCost()+1,boxNextPos,a);
-					possibleStates.put(a, state);
-				}
-			}
-		}
-		if(s.getCameFrom()!=null)
-		{
-			boxPosition.remove(s.getState());
-			boxPosition.add(currentBoxSearchable);
-		}		
-		return possibleStates;
-	}*/
 	
 	public boolean checkPossibleMove(Position currentPosition, EnumAction ea)
 	{

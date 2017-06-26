@@ -67,4 +67,17 @@ public class State<T> {
 	{
 		return state.hashCode();		
 	}
+	public void print()
+	{
+		if (cameFrom==null)
+			System.out.println("null");
+		else
+			System.out.println(cameFrom);
+		System.out.println(action);
+		if (state==null)
+			System.out.println("null");
+		else
+			System.out.println(state);
+		System.out.println(cost);
+	}
 }

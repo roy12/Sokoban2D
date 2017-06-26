@@ -60,6 +60,7 @@ public class SokSearchable implements Searchable<SokState> {
 	{
 		if(lvl!=null)
 		{
+			System.out.println("goal State produsing");
 			SokState inerState=new SokState();
 			inerState.setPlayerPosition(lvl.getPl());
 			ArrayList<GameObject> targetst=lvl.getTargets();
@@ -171,6 +172,14 @@ public class SokSearchable implements Searchable<SokState> {
 		createdState.setAction(action); 
 		System.out.println("new state: "+createdState.getState()+" "+createdState.getAction()); 
 		return createdState; 		
+	}
+
+	public State<SokState> getInitialstate() {
+		return initialstate;
+	}
+
+	public State<SokState> getGoalstate() {
+		return goalstate;
 	}
 
 }
