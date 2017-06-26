@@ -1,6 +1,5 @@
 package Command;
 
-import Model.Model;
 import Model.MyModel;
 
 public class MoveCommand extends Command {

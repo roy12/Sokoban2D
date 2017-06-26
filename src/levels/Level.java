@@ -1,9 +1,22 @@
 package levels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Timer;
+import javax.persistence.Column;
+import javax.persistence.Id;
 
-public class Level {
+public class Level implements Serializable {
+	
+	//hibernate
+	@Id
+	@Column(name="level_name")
+	private String levelName;
+	private int difficulty;
+	@Column(name="time")
+	private int time;
+	@Column(name="steps")
+	private int steps;
+	
 	
 	private GameObject[][] map;
 	private int width;
@@ -35,6 +48,19 @@ public class Level {
 	}
 
 	public Level (Level lvl) {
+		
+		//hibernate
+		this.difficulty=lvl.getDifficulty();
+		this.time=lvl.getTime();
+		this.steps=lvl.getSteps();
+		this.levelName=lvl.getLevelName();
+		
+		/*
+		time = 0;
+		steps = 0;
+		levelName = " ";
+		*/
+		
 		this.width=lvl.getWidth();
 		this.height=lvl.getHeight();
 		this.map=lvl.getMap();
@@ -46,7 +72,7 @@ public class Level {
 		this.boxes=boxes;
 	}
 	
-	public Level (int width,int height,GameObject[][] map,Position start,Position pl, int numOfTargets,ArrayList <GameObject> targets,ArrayList <GameObject> boxes) {
+	public Level (String name,int width,int height,GameObject[][] map,Position start,Position pl, int numOfTargets,ArrayList <GameObject> targets,ArrayList <GameObject> boxes) {
 		this.width=width;
 		this.height=height;
 		this.map=map;
@@ -57,6 +83,7 @@ public class Level {
 		this.targets=targets;
 		lastMove="Down";
 		this.boxes=boxes;
+		this.levelName = name;
 	}
 public Level() {
 	// TODO Auto-generated constructor stub
@@ -150,16 +177,44 @@ public Level() {
 		GameObject go=map[p.getX()][p.getY()];		
 		return go;
 	}
-	public void printLevel()
-	{
-		for(int i=0;i<height;i++)
-		{
-			for(int j=0;j<width;j++)
-			{
-				System.out.print(map[i][j].getType());
-			}
-			System.out.println();
-		}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	public int getSteps() {
+		return steps;
+	}
+
+	public void setSteps(int steps) {
+		this.steps = steps;
+	}
+
+	public String getLevelName() {
+		return levelName;
+	}
+
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
+	
+	public boolean equals(Object arg0) {
+		Level l = (Level) arg0;
+		if(this.levelName.compareTo(l.getLevelName())==0)
+			return true;
+		else return false;
 	}
 	
 }

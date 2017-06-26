@@ -1,6 +1,5 @@
 package Command;
 
-import Model.Model;
 import Model.MyModel;
 import view.View;
 

@@ -1,7 +1,7 @@
 package Controller;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -11,9 +11,13 @@ import Command.DisplayLevelCommand;
 import Command.ExitCommand;
 import Command.GuiDisplayerLevelCommand;
 import Command.LoadLevelCommand;
+import Command.LoadSessionFromDBCommand;
 import Command.MoveCommand;
 import Command.RestartCommand;
 import Command.SaveLevelCommand;
+import Command.SaveToDBCommand;
+import Command.UpdateStepsCommand;
+import Command.UpdateTimeCommand;
 import Controller.Controller;
 import Controllr.Server.MyServer;
 import Model.MyModel;
@@ -57,11 +61,18 @@ public class MyController implements Observer {
 		commands.put("Save", new SaveLevelCommand(model));
 		commands.put("Exit", new ExitCommand(model));
 		commands.put("Restart", new RestartCommand(model));
+		
+		//hibernate
+		commands.put("LoadSessionDB", new LoadSessionFromDBCommand(model,view));
+		commands.put("saveToDB", new SaveToDBCommand(model,view));
+		commands.put("time", new UpdateTimeCommand(model));
+		commands.put("steps", new UpdateStepsCommand(model));
 	}	
 
 	@Override
 	public void update(Observable o, Object arg) {
-		List<String> params = (List<String>) arg;
+		@SuppressWarnings("unchecked")
+		LinkedList<String> params = (LinkedList<String>) arg;
 		String commandKey = params.remove(0);
 		Command c = commands.get(commandKey);
 		if (c == null) {
@@ -76,6 +87,7 @@ public class MyController implements Observer {
 			@Override
 			public void run() {
 				steps.set(model.getStepC());
+				timer.set(model.getTimerC());
 				
 			}
 		});

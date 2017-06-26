@@ -22,6 +22,7 @@ public class TextLevelLoader implements LevelLoader{
 	public Level loadLevel(InputStream in) {
 		
 		Level newLevel = new Level();
+		String name;
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		ObjectFactory of = new ObjectFactory();
 		String line= null;
@@ -40,7 +41,7 @@ public class TextLevelLoader implements LevelLoader{
 		try {
 			line = br.readLine();
 		} catch (IOException e) {
-			System.out.println("error reading file");
+			System.out.println("error reading file size");
 		}
 		
 			charArr= line.toCharArray();
@@ -56,7 +57,19 @@ public class TextLevelLoader implements LevelLoader{
 				width*=10;
 				width += Character.getNumericValue(charArr[i]);
 			}		
-		
+			
+			//read second line to adjust level name
+			
+			try {
+				line = br.readLine();
+			} catch (IOException e) {
+				System.out.println("error reading file name");
+			}
+			newLevel.setLevelName(line);
+			name=line;
+	
+			//read level char's
+			
 			newLevel.setHeight(height);
 			newLevel.setWidth(width);
 			map = new GameObject[height][width];
@@ -96,6 +109,6 @@ public class TextLevelLoader implements LevelLoader{
 				}
 			}
 			
-			return new Level(width,height,map,start,start,numOfTargets,targets,boxes);
+			return new Level(name,width,height,map,start,start,numOfTargets,targets,boxes);
 		}
 	}

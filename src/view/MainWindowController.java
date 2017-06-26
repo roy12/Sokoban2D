@@ -2,10 +2,12 @@ package view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -17,13 +19,17 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import levels.Level;
 
@@ -39,15 +45,11 @@ public class MainWindowController extends Observable implements View, Initializa
 	}
 	
 	@FXML
-	Label stepsLabel;
-
-	@FXML
-	Label timerLabel;
+	Label stepsLabel,timerLabel;
 	
 	private IntegerProperty seconds;
 	private Timeline timeline;
 	private Boolean firstMove=true;
-
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -75,7 +77,6 @@ public class MainWindowController extends Observable implements View, Initializa
 				firstMove = false; 
 				}
 
-				
 				if(event.getCode()== KeyCode.UP)
 				{			
 					params.add("Move");
@@ -185,7 +186,19 @@ public class MainWindowController extends Observable implements View, Initializa
 				try {
 					timeline.stop();
 					Thread.sleep(400);					
-					gd.finishLevel();	
+					gd.finishLevel();
+					
+					//hibernate
+					updateTime();
+
+					Platform.runLater(new Runnable() {
+		
+						@Override
+						public void run() {
+							getUserDetails();
+							
+						}
+					});
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -211,7 +224,6 @@ public class MainWindowController extends Observable implements View, Initializa
 			@Override
 			public void run() {
 				stepsLabel.textProperty().bind((stepsC).asString());
-				
 			}
 		});
 	}
@@ -221,10 +233,106 @@ public class MainWindowController extends Observable implements View, Initializa
 			
 			@Override
 			public void run() {
-				
-				
+				//timerLabel.textProperty().bind((timerC).asString());
 			}
 		});
 	}
 
+	@Override
+	public void displayRecord(int record) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	//hibernate
+	
+	private void updateSteps() {
+		LinkedList<String> params = new LinkedList<String>();
+		params.add("steps");
+		params.add(stepsLabel.getText());
+		setChanged();
+		notifyObservers(params);
+	}
+	
+	private void updateTime(){
+		LinkedList<String> params = new LinkedList<String>();
+		params.add("time");
+		params.add(timerLabel.getText());
+		setChanged();
+		notifyObservers(params);
+	}
+	
+	private void checkRecord(int time){
+		LinkedList<String> params = new LinkedList<String>();
+		params.add("time");
+		params.add(String.valueOf(time));
+	}
+	
+	public void getUserDetails(){
+		
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setContentText("Please insert username");
+		dialog.setTitle("Submit score");
+		dialog.setHeaderText("Join the scoreboard");
+		
+		Optional<String> result = dialog.showAndWait();
+		if(result.isPresent()){
+			
+			LinkedList<String> params = new LinkedList<String>();
+			params.add("saveToDB");
+			params.add(result.get());
+			setChanged();
+			notifyObservers(params);
+		}
+	}
+	
+	
+	@Override
+	public void getCurrentLevelSession(){
+		LinkedList<String> params = new LinkedList<String>();
+		
+		params.add("LoadSessionDB");
+		setChanged();
+		notifyObservers(params);
+	}
+	
+	@Override
+	public void displaySessionsList(List list) {
+		//TODO add display for table !! 
+			if(list == null){
+			System.out.println("error printing scoreboard");
+			return;
+		}		
+		
+		try{
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("boot/ScoreBoard.fxml"));
+			Scene scene = new Scene(loader.load(),600,400);
+			ScoreBoardController score = loader.getController();
+			score.setTable(list);
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					Stage stage = new Stage();
+					stage.setTitle("Score Board");
+					stage.setScene(scene);
+					stage.show();
+				}
+			});
+			
+			
+			
+			} catch(IOException e){
+				e.printStackTrace();
+			}
+			
+		
+		
+		
+	}
+	
+
 }
+
+

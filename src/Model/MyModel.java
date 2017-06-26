@@ -5,21 +5,28 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import levels.Level;
 import view.View;
 
 public class MyModel extends Model {
+	
+	//hibernate 
+	DataBaseManager dbm;
+	
 	private Level lvl=null;
 	private String str=null;
 	
 	private int stepC = 0;	
+	private int timerC = 0;	
 	
 	public MyModel() {
-		// TODO Auto-generated constructor stub
+		
+		//hibernate
+		dbm = new SokobanDBManager();
+
+		
 	}
+
 		
 	
 	
@@ -56,6 +63,7 @@ public class MyModel extends Model {
 			System.out.println("Unknown Command");
 		}
 		setStepC(getStepC() + 1);
+		updateSteps(stepC);
 		
 		this.setChanged();
 		List<String> params = new LinkedList<String>();
@@ -192,6 +200,47 @@ public class MyModel extends Model {
 	public void setStepC(int stepC) {
 		this.stepC = stepC;
 	}	
+	
+	//hibernate
+	
+	public List loadSessionFromDB() {
+		if(lvl!=null)
+			return dbm.getGameSessionTableForLevel(lvl);
+		else return null;
+	}
+	
+public void saveToDB(String username) {		
+		User user = new User(username);
+		if(lvl != null){
+		dbm.saveUserAndLevel(user, lvl);
+		}
+		
+	}
+
+public void updateTime(String seconds) {
+	if(lvl!=null){
+		lvl.setTime(Integer.parseInt(seconds));
+	}
+	
+}
+
+
+public void updateSteps(int steps) {
+	if(lvl!=null)
+		lvl.setSteps(steps);
+	
+}
+
+public int getTimerC() {
+	return timerC;
+}
+
+
+
+
+public void setTimerC(int timerC) {
+	this.timerC = timerC;
+}
 		
 	
 }

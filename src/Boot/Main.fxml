@@ -20,6 +20,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#restartLevel" text="Restart" />
+                  <MenuItem mnemonicParsing="false" onAction="#getCurrentLevelSession" text="Scoreboard" />
               <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
             </items>
           </Menu>

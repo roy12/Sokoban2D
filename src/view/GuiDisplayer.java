@@ -2,7 +2,6 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
@@ -66,9 +65,7 @@ public class GuiDisplayer extends Canvas{
 		GraphicsContext gc = getGraphicsContext2D();
 		
 		gc.clearRect(0, 0, W, H);		
-		
-			
-			gc.drawImage(finish , 5,5, W, H);
+		gc.drawImage(finish , 5,5, W, H);
 	
 	}
 	

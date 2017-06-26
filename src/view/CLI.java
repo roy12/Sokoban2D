@@ -75,6 +75,34 @@ public class CLI extends Observable implements View {
 		
 	}
 
+
+	@Override
+	public void getUserDetails() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getCurrentLevelSession() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void displaySessionsList(List list) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void displayRecord(int record) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
 

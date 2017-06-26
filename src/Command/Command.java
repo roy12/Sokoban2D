@@ -1,13 +1,13 @@
 package Command;
 
 
-import java.util.List;
+import java.util.LinkedList;
 
 public abstract class Command 
 {	
-	protected List<String> params;
+	protected LinkedList<String> params;
 	
-	public void setParams(List<String> params) {
+	public void setParams(LinkedList<String> params) {
 		this.params = params;
 	}
 	

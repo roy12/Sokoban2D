@@ -5,7 +5,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import Command.Command;
-import Command.ExitCommand;
 
 public class Controller {
 	private BlockingQueue<Command> queue;

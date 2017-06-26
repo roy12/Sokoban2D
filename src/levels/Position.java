@@ -34,48 +34,5 @@ public class Position {
 		this.x = x;
 		this.y = y;
 	}
-	public String toString() 
-	{ 
-	return "("+x+","+y+")"; 
-	} 
-	public Position getUp()
-	{
-		return new Position(x-1,y);
-	}
-	public Position getDown()
-	{
-		return new Position(x+1,y);
-	}
-	public Position getLeft()
-	{
-		return new Position(x,y-1);
-	}
-	public Position getRight()
-	{
-		return new Position(x,y+1);
-	}
-	public boolean equals(Position p)
-	{
-		if(p.getX()==this.x&&p.getY()==this.y)
-			return true;
-		else
-			return false;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if ((this.x == ((Position) obj).x) && (this.y == ((Position) obj).y))
-			return true;
-		else
-			return false;
-
-	}
-
-	@Override
-	public int hashCode() {
-		String code = "(" + Integer.toString(x) + "," + Integer.toString(y) + ")";
-		return code.hashCode();
-	}
-
 
 }
