@@ -216,5 +216,16 @@ public Level() {
 			return true;
 		else return false;
 	}
+	public void printLevel()
+	{
+		for(int i=0;i<height;i++)
+		{
+			for(int j=0;j<width;j++)
+			{
+				System.out.print(map[i][j].getType());
+			}
+			System.out.println();
+		}
+	}
 	
 }

@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import Model.TextLevelLoader;
 import levels.Level;
-import search.EnumAction;
 
 public class RoyTest {
 
@@ -16,7 +15,7 @@ public class RoyTest {
 		TextLevelLoader tll=new TextLevelLoader();
 		
 		try { 			
-			lvl=(Level) tll.loadLevel((new FileInputStream(new File("recources\\levels\\testlevel.txt")))); 
+			lvl=(Level) tll.loadLevel((new FileInputStream(new File("recources\\levels\\Level1.txt")))); 
 			SokSolver sokobanSolver=new SokSolver();
 			lvl.printLevel();
 			System.out.println();
